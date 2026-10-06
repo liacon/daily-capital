@@ -1,0 +1,1603 @@
+{
+  "metadata": {
+    "source": "Natural Earth ne_10m_populated_places_simple.geojson",
+    "sourceUrl": "https://github.com/nvkelso/natural-earth-vector/tree/master/geojson",
+    "license": "Public domain",
+    "included": "Records where featurecla is Admin-0 capital and adm0cap equals 1.",
+    "excluded": "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places."
+  },
+  "capitals": [
+    {
+      "id": "abidjan-ivory-coast",
+      "capital": "Abidjan",
+      "country": "Ivory Coast",
+      "sovereign": "Ivory Coast",
+      "lat": 5.323126,
+      "lon": -4.020207
+    },
+    {
+      "id": "abu-dhabi-united-arab-emirates",
+      "capital": "Abu Dhabi",
+      "country": "United Arab Emirates",
+      "sovereign": "United Arab Emirates",
+      "lat": 24.466684,
+      "lon": 54.366593
+    },
+    {
+      "id": "abuja-nigeria",
+      "capital": "Abuja",
+      "country": "Nigeria",
+      "sovereign": "Nigeria",
+      "lat": 9.05462,
+      "lon": 7.489505
+    },
+    {
+      "id": "accra-ghana",
+      "capital": "Accra",
+      "country": "Ghana",
+      "sovereign": "Ghana",
+      "lat": 5.55198,
+      "lon": -0.218662
+    },
+    {
+      "id": "addis-ababa-ethiopia",
+      "capital": "Addis Ababa",
+      "country": "Ethiopia",
+      "sovereign": "Ethiopia",
+      "lat": 9.035256,
+      "lon": 38.698059
+    },
+    {
+      "id": "algiers-algeria",
+      "capital": "Algiers",
+      "country": "Algeria",
+      "sovereign": "Algeria",
+      "lat": 36.765011,
+      "lon": 3.048607
+    },
+    {
+      "id": "amman-jordan",
+      "capital": "Amman",
+      "country": "Jordan",
+      "sovereign": "Jordan",
+      "lat": 31.951971,
+      "lon": 35.931354
+    },
+    {
+      "id": "amsterdam-netherlands",
+      "capital": "Amsterdam",
+      "country": "Netherlands",
+      "sovereign": "Kingdom of the Netherlands",
+      "lat": 52.351914,
+      "lon": 4.914694
+    },
+    {
+      "id": "andorra-andorra",
+      "capital": "Andorra",
+      "country": "Andorra",
+      "sovereign": "Andorra",
+      "lat": 42.510753,
+      "lon": 1.526594
+    },
+    {
+      "id": "ankara-turkey",
+      "capital": "Ankara",
+      "country": "Turkey",
+      "sovereign": "Turkey",
+      "lat": 39.929184,
+      "lon": 32.862446
+    },
+    {
+      "id": "antananarivo-madagascar",
+      "capital": "Antananarivo",
+      "country": "Madagascar",
+      "sovereign": "Madagascar",
+      "lat": -18.914691,
+      "lon": 47.514678
+    },
+    {
+      "id": "apia-samoa",
+      "capital": "Apia",
+      "country": "Samoa",
+      "sovereign": "Samoa",
+      "lat": -13.835715,
+      "lon": -171.768599
+    },
+    {
+      "id": "ashgabat-turkmenistan",
+      "capital": "Ashgabat",
+      "country": "Turkmenistan",
+      "sovereign": "Turkmenistan",
+      "lat": 37.949995,
+      "lon": 58.383299
+    },
+    {
+      "id": "asmara-eritrea",
+      "capital": "Asmara",
+      "country": "Eritrea",
+      "sovereign": "Eritrea",
+      "lat": 15.333339,
+      "lon": 38.933324
+    },
+    {
+      "id": "asuncion-paraguay",
+      "capital": "Asunción",
+      "country": "Paraguay",
+      "sovereign": "Paraguay",
+      "lat": -25.290671,
+      "lon": -57.625834
+    },
+    {
+      "id": "athens-greece",
+      "capital": "Athens",
+      "country": "Greece",
+      "sovereign": "Greece",
+      "lat": 37.985272,
+      "lon": 23.731375
+    },
+    {
+      "id": "baghdad-iraq",
+      "capital": "Baghdad",
+      "country": "Iraq",
+      "sovereign": "Iraq",
+      "lat": 33.340594,
+      "lon": 44.391923
+    },
+    {
+      "id": "baku-azerbaijan",
+      "capital": "Baku",
+      "country": "Azerbaijan",
+      "sovereign": "Azerbaijan",
+      "lat": 40.397218,
+      "lon": 49.860271
+    },
+    {
+      "id": "bamako-mali",
+      "capital": "Bamako",
+      "country": "Mali",
+      "sovereign": "Mali",
+      "lat": 12.65196,
+      "lon": -8.001985
+    },
+    {
+      "id": "bandar-seri-begawan-brunei",
+      "capital": "Bandar Seri Begawan",
+      "country": "Brunei",
+      "sovereign": "Brunei",
+      "lat": 4.883331,
+      "lon": 114.933284
+    },
+    {
+      "id": "bangkok-thailand",
+      "capital": "Bangkok",
+      "country": "Thailand",
+      "sovereign": "Thailand",
+      "lat": 13.751945,
+      "lon": 100.514699
+    },
+    {
+      "id": "bangui-central-african-republic",
+      "capital": "Bangui",
+      "country": "Central African Republic",
+      "sovereign": "Central African Republic",
+      "lat": 4.366644,
+      "lon": 18.558288
+    },
+    {
+      "id": "banjul-the-gambia",
+      "capital": "Banjul",
+      "country": "The Gambia",
+      "sovereign": "Gambia, The",
+      "lat": 13.453876,
+      "lon": -16.591701
+    },
+    {
+      "id": "basseterre-saint-kitts-and-nevis",
+      "capital": "Basseterre",
+      "country": "Saint Kitts and Nevis",
+      "sovereign": "Saint Kitts and Nevis",
+      "lat": 17.302031,
+      "lon": -62.717009
+    },
+    {
+      "id": "beijing-china",
+      "capital": "Beijing",
+      "country": "China",
+      "sovereign": "China",
+      "lat": 39.90172,
+      "lon": 116.394201
+    },
+    {
+      "id": "beirut-lebanon",
+      "capital": "Beirut",
+      "country": "Lebanon",
+      "sovereign": "Lebanon",
+      "lat": 33.873921,
+      "lon": 35.507762
+    },
+    {
+      "id": "belgrade-serbia",
+      "capital": "Belgrade",
+      "country": "Serbia",
+      "sovereign": "Republic of Serbia",
+      "lat": 44.820591,
+      "lon": 20.466045
+    },
+    {
+      "id": "belmopan-belize",
+      "capital": "Belmopan",
+      "country": "Belize",
+      "sovereign": "Belize",
+      "lat": 17.252033,
+      "lon": -88.767073
+    },
+    {
+      "id": "berlin-germany",
+      "capital": "Berlin",
+      "country": "Germany",
+      "sovereign": "Germany",
+      "lat": 52.523764,
+      "lon": 13.399603
+    },
+    {
+      "id": "bern-switzerland",
+      "capital": "Bern",
+      "country": "Switzerland",
+      "sovereign": "Switzerland",
+      "lat": 46.916683,
+      "lon": 7.466976
+    },
+    {
+      "id": "bishkek-kyrgyzstan",
+      "capital": "Bishkek",
+      "country": "Kyrgyzstan",
+      "sovereign": "Kyrgyzstan",
+      "lat": 42.875025,
+      "lon": 74.583258
+    },
+    {
+      "id": "bissau-guinea-bissau",
+      "capital": "Bissau",
+      "country": "Guinea Bissau",
+      "sovereign": "Guinea Bissau",
+      "lat": 11.865024,
+      "lon": -15.598361
+    },
+    {
+      "id": "bloemfontein-south-africa",
+      "capital": "Bloemfontein",
+      "country": "South Africa",
+      "sovereign": "South Africa",
+      "lat": -29.119994,
+      "lon": 26.229913
+    },
+    {
+      "id": "bogota-colombia",
+      "capital": "Bogota",
+      "country": "Colombia",
+      "sovereign": "Colombia",
+      "lat": 4.598369,
+      "lon": -74.08529
+    },
+    {
+      "id": "brasilia-brazil",
+      "capital": "Brasília",
+      "country": "Brazil",
+      "sovereign": "Brazil",
+      "lat": -15.781394,
+      "lon": -47.917998
+    },
+    {
+      "id": "bratislava-slovakia",
+      "capital": "Bratislava",
+      "country": "Slovakia",
+      "sovereign": "Slovakia",
+      "lat": 48.150018,
+      "lon": 17.116981
+    },
+    {
+      "id": "brazzaville-congo-brazzaville",
+      "capital": "Brazzaville",
+      "country": "Congo (Brazzaville)",
+      "sovereign": "Congo (Brazzaville)",
+      "lat": -4.25724,
+      "lon": 15.282744
+    },
+    {
+      "id": "bridgetown-barbados",
+      "capital": "Bridgetown",
+      "country": "Barbados",
+      "sovereign": "Barbados",
+      "lat": 13.102003,
+      "lon": -59.616527
+    },
+    {
+      "id": "brussels-belgium",
+      "capital": "Brussels",
+      "country": "Belgium",
+      "sovereign": "Belgium",
+      "lat": 50.835263,
+      "lon": 4.331371
+    },
+    {
+      "id": "bucharest-romania",
+      "capital": "Bucharest",
+      "country": "Romania",
+      "sovereign": "Romania",
+      "lat": 44.435318,
+      "lon": 26.098001
+    },
+    {
+      "id": "budapest-hungary",
+      "capital": "Budapest",
+      "country": "Hungary",
+      "sovereign": "Hungary",
+      "lat": 47.501952,
+      "lon": 19.081375
+    },
+    {
+      "id": "buenos-aires-argentina",
+      "capital": "Buenos Aires",
+      "country": "Argentina",
+      "sovereign": "Argentina",
+      "lat": -34.610715,
+      "lon": -58.432513
+    },
+    {
+      "id": "bujumbura-burundi",
+      "capital": "Bujumbura",
+      "country": "Burundi",
+      "sovereign": "Burundi",
+      "lat": -3.376087,
+      "lon": 29.360006
+    },
+    {
+      "id": "cairo-egypt",
+      "capital": "Cairo",
+      "country": "Egypt",
+      "sovereign": "Egypt",
+      "lat": 30.051906,
+      "lon": 31.248022
+    },
+    {
+      "id": "canberra-australia",
+      "capital": "Canberra",
+      "country": "Australia",
+      "sovereign": "Australia",
+      "lat": -35.283029,
+      "lon": 149.129026
+    },
+    {
+      "id": "cape-town-south-africa",
+      "capital": "Cape Town",
+      "country": "South Africa",
+      "sovereign": "South Africa",
+      "lat": -33.918065,
+      "lon": 18.433042
+    },
+    {
+      "id": "caracas-venezuela",
+      "capital": "Caracas",
+      "country": "Venezuela",
+      "sovereign": "Venezuela",
+      "lat": 10.502944,
+      "lon": -66.918983
+    },
+    {
+      "id": "castries-saint-lucia",
+      "capital": "Castries",
+      "country": "Saint Lucia",
+      "sovereign": "Saint Lucia",
+      "lat": 14.007875,
+      "lon": -60.992875
+    },
+    {
+      "id": "chisinau-moldova",
+      "capital": "Chișinău",
+      "country": "Moldova",
+      "sovereign": "Moldova",
+      "lat": 47.005024,
+      "lon": 28.857711
+    },
+    {
+      "id": "colombo-sri-lanka",
+      "capital": "Colombo",
+      "country": "Sri Lanka",
+      "sovereign": "Sri Lanka",
+      "lat": 6.931966,
+      "lon": 79.857751
+    },
+    {
+      "id": "conakry-guinea",
+      "capital": "Conakry",
+      "country": "Guinea",
+      "sovereign": "Guinea",
+      "lat": 9.533469,
+      "lon": -13.682181
+    },
+    {
+      "id": "cotonou-benin",
+      "capital": "Cotonou",
+      "country": "Benin",
+      "sovereign": "Benin",
+      "lat": 6.36298,
+      "lon": 2.404355
+    },
+    {
+      "id": "dakar-senegal",
+      "capital": "Dakar",
+      "country": "Senegal",
+      "sovereign": "Senegal",
+      "lat": 14.717778,
+      "lon": -17.475076
+    },
+    {
+      "id": "damascus-syria",
+      "capital": "Damascus",
+      "country": "Syria",
+      "sovereign": "Syria",
+      "lat": 33.50198,
+      "lon": 36.29805
+    },
+    {
+      "id": "dar-es-salaam-tanzania",
+      "capital": "Dar es Salaam",
+      "country": "Tanzania",
+      "sovereign": "United Republic of Tanzania",
+      "lat": -6.798067,
+      "lon": 39.266396
+    },
+    {
+      "id": "dhaka-bangladesh",
+      "capital": "Dhaka",
+      "country": "Bangladesh",
+      "sovereign": "Bangladesh",
+      "lat": 23.725006,
+      "lon": 90.406634
+    },
+    {
+      "id": "dili-east-timor",
+      "capital": "Dili",
+      "country": "East Timor",
+      "sovereign": "East Timor",
+      "lat": -8.559388,
+      "lon": 125.579456
+    },
+    {
+      "id": "djibouti-djibouti",
+      "capital": "Djibouti",
+      "country": "Djibouti",
+      "sovereign": "Djibouti",
+      "lat": 11.595014,
+      "lon": 43.148002
+    },
+    {
+      "id": "doha-qatar",
+      "capital": "Doha",
+      "country": "Qatar",
+      "sovereign": "Qatar",
+      "lat": 25.286556,
+      "lon": 51.532968
+    },
+    {
+      "id": "dublin-ireland",
+      "capital": "Dublin",
+      "country": "Ireland",
+      "sovereign": "Ireland",
+      "lat": 53.346731,
+      "lon": -6.25698
+    },
+    {
+      "id": "dushanbe-tajikistan",
+      "capital": "Dushanbe",
+      "country": "Tajikistan",
+      "sovereign": "Tajikistan",
+      "lat": 38.560035,
+      "lon": 68.773879
+    },
+    {
+      "id": "freetown-sierra-leone",
+      "capital": "Freetown",
+      "country": "Sierra Leone",
+      "sovereign": "Sierra Leone",
+      "lat": 8.471957,
+      "lon": -13.236162
+    },
+    {
+      "id": "funafuti-tuvalu",
+      "capital": "Funafuti",
+      "country": "Tuvalu",
+      "sovereign": "Tuvalu",
+      "lat": -8.516652,
+      "lon": 179.216647
+    },
+    {
+      "id": "gaborone-botswana",
+      "capital": "Gaborone",
+      "country": "Botswana",
+      "sovereign": "Botswana",
+      "lat": -24.646314,
+      "lon": 25.911948
+    },
+    {
+      "id": "georgetown-guyana",
+      "capital": "Georgetown",
+      "country": "Guyana",
+      "sovereign": "Guyana",
+      "lat": 6.801974,
+      "lon": -58.167029
+    },
+    {
+      "id": "guatemala-city-guatemala",
+      "capital": "Guatemala City",
+      "country": "Guatemala",
+      "sovereign": "Guatemala",
+      "lat": 14.623081,
+      "lon": -90.528911
+    },
+    {
+      "id": "hanoi-vietnam",
+      "capital": "Hanoi",
+      "country": "Vietnam",
+      "sovereign": "Vietnam",
+      "lat": 21.035273,
+      "lon": 105.848068
+    },
+    {
+      "id": "harare-zimbabwe",
+      "capital": "Harare",
+      "country": "Zimbabwe",
+      "sovereign": "Zimbabwe",
+      "lat": -17.815844,
+      "lon": 31.042764
+    },
+    {
+      "id": "hargeisa-somaliland",
+      "capital": "Hargeisa",
+      "country": "Somaliland",
+      "sovereign": "Somaliland",
+      "lat": 9.560022,
+      "lon": 44.06531
+    },
+    {
+      "id": "havana-cuba",
+      "capital": "Havana",
+      "country": "Cuba",
+      "sovereign": "Cuba",
+      "lat": 23.133905,
+      "lon": -82.366128
+    },
+    {
+      "id": "helsinki-finland",
+      "capital": "Helsinki",
+      "country": "Finland",
+      "sovereign": "Finland",
+      "lat": 60.163804,
+      "lon": 24.932457
+    },
+    {
+      "id": "honiara-solomon-islands",
+      "capital": "Honiara",
+      "country": "Solomon Islands",
+      "sovereign": "Solomon Islands",
+      "lat": -9.437994,
+      "lon": 159.949766
+    },
+    {
+      "id": "islamabad-pakistan",
+      "capital": "Islamabad",
+      "country": "Pakistan",
+      "sovereign": "Pakistan",
+      "lat": 33.689368,
+      "lon": 73.08063
+    },
+    {
+      "id": "jakarta-indonesia",
+      "capital": "Jakarta",
+      "country": "Indonesia",
+      "sovereign": "Indonesia",
+      "lat": -6.172472,
+      "lon": 106.827492
+    },
+    {
+      "id": "jerusalem-israel",
+      "capital": "Jerusalem",
+      "country": "Israel",
+      "sovereign": "Israel",
+      "lat": 31.778408,
+      "lon": 35.206626
+    },
+    {
+      "id": "kabul-afghanistan",
+      "capital": "Kabul",
+      "country": "Afghanistan",
+      "sovereign": "Afghanistan",
+      "lat": 34.518636,
+      "lon": 69.181314
+    },
+    {
+      "id": "kampala-uganda",
+      "capital": "Kampala",
+      "country": "Uganda",
+      "sovereign": "Uganda",
+      "lat": 0.318605,
+      "lon": 32.581378
+    },
+    {
+      "id": "kathmandu-nepal",
+      "capital": "Kathmandu",
+      "country": "Nepal",
+      "sovereign": "Nepal",
+      "lat": 27.718638,
+      "lon": 85.314696
+    },
+    {
+      "id": "khartoum-sudan",
+      "capital": "Khartoum",
+      "country": "Sudan",
+      "sovereign": "Sudan",
+      "lat": 15.590024,
+      "lon": 32.532233
+    },
+    {
+      "id": "kigali-rwanda",
+      "capital": "Kigali",
+      "country": "Rwanda",
+      "sovereign": "Rwanda",
+      "lat": -1.951644,
+      "lon": 30.058586
+    },
+    {
+      "id": "kingston-jamaica",
+      "capital": "Kingston",
+      "country": "Jamaica",
+      "sovereign": "Jamaica",
+      "lat": 17.977077,
+      "lon": -76.767434
+    },
+    {
+      "id": "kingstown-saint-vincent-and-the-grenadines",
+      "capital": "Kingstown",
+      "country": "Saint Vincent and the Grenadines",
+      "sovereign": "Saint Vincent and the Grenadines",
+      "lat": 13.155756,
+      "lon": -61.220236
+    },
+    {
+      "id": "kinshasa-congo-kinshasa",
+      "capital": "Kinshasa",
+      "country": "Congo (Kinshasa)",
+      "sovereign": "Congo (Kinshasa)",
+      "lat": -4.327778,
+      "lon": 15.313026
+    },
+    {
+      "id": "k-benhavn-denmark",
+      "capital": "København",
+      "country": "Denmark",
+      "sovereign": "Denmark",
+      "lat": 55.68051,
+      "lon": 12.56154
+    },
+    {
+      "id": "kuala-lumpur-malaysia",
+      "capital": "Kuala Lumpur",
+      "country": "Malaysia",
+      "sovereign": "Malaysia",
+      "lat": 3.139797,
+      "lon": 101.688699
+    },
+    {
+      "id": "kuwait-city-kuwait",
+      "capital": "Kuwait City",
+      "country": "Kuwait",
+      "sovereign": "Kuwait",
+      "lat": 29.371664,
+      "lon": 47.976355
+    },
+    {
+      "id": "kyiv-ukraine",
+      "capital": "Kyiv",
+      "country": "Ukraine",
+      "sovereign": "Ukraine",
+      "lat": 50.435313,
+      "lon": 30.514682
+    },
+    {
+      "id": "la-paz-bolivia",
+      "capital": "La Paz",
+      "country": "Bolivia",
+      "sovereign": "Bolivia",
+      "lat": -16.496028,
+      "lon": -68.151931
+    },
+    {
+      "id": "libreville-gabon",
+      "capital": "Libreville",
+      "country": "Gabon",
+      "sovereign": "Gabon",
+      "lat": 0.385389,
+      "lon": 9.457965
+    },
+    {
+      "id": "lilongwe-malawi",
+      "capital": "Lilongwe",
+      "country": "Malawi",
+      "sovereign": "Malawi",
+      "lat": -13.983295,
+      "lon": 33.783302
+    },
+    {
+      "id": "lima-peru",
+      "capital": "Lima",
+      "country": "Peru",
+      "sovereign": "Peru",
+      "lat": -12.046067,
+      "lon": -77.052008
+    },
+    {
+      "id": "lisbon-portugal",
+      "capital": "Lisbon",
+      "country": "Portugal",
+      "sovereign": "Portugal",
+      "lat": 38.724669,
+      "lon": -9.146812
+    },
+    {
+      "id": "ljubljana-slovenia",
+      "capital": "Ljubljana",
+      "country": "Slovenia",
+      "sovereign": "Slovenia",
+      "lat": 46.055288,
+      "lon": 14.514969
+    },
+    {
+      "id": "lome-togo",
+      "capital": "Lomé",
+      "country": "Togo",
+      "sovereign": "Togo",
+      "lat": 6.133883,
+      "lon": 1.220811
+    },
+    {
+      "id": "london-united-kingdom",
+      "capital": "London",
+      "country": "United Kingdom",
+      "sovereign": "United Kingdom",
+      "lat": 51.501941,
+      "lon": -0.118668
+    },
+    {
+      "id": "luanda-angola",
+      "capital": "Luanda",
+      "country": "Angola",
+      "sovereign": "Angola",
+      "lat": -8.83634,
+      "lon": 13.232481
+    },
+    {
+      "id": "lusaka-zambia",
+      "capital": "Lusaka",
+      "country": "Zambia",
+      "sovereign": "Zambia",
+      "lat": -15.414698,
+      "lon": 28.281382
+    },
+    {
+      "id": "luxembourg-luxembourg",
+      "capital": "Luxembourg",
+      "country": "Luxembourg",
+      "sovereign": "Luxembourg",
+      "lat": 49.61166,
+      "lon": 6.130003
+    },
+    {
+      "id": "madrid-spain",
+      "capital": "Madrid",
+      "country": "Spain",
+      "sovereign": "Kingdom of Spain",
+      "lat": 40.401972,
+      "lon": -3.685297
+    },
+    {
+      "id": "majuro-marshall-islands",
+      "capital": "Majuro",
+      "country": "Marshall Islands",
+      "sovereign": "Marshall Islands",
+      "lat": 7.103004,
+      "lon": 171.38
+    },
+    {
+      "id": "malabo-equatorial-guinea",
+      "capital": "Malabo",
+      "country": "Equatorial Guinea",
+      "sovereign": "Equatorial Guinea",
+      "lat": 3.750015,
+      "lon": 8.783278
+    },
+    {
+      "id": "male-maldives",
+      "capital": "Malé",
+      "country": "Maldives",
+      "sovereign": "Maldives",
+      "lat": 4.172037,
+      "lon": 73.508901
+    },
+    {
+      "id": "managua-nicaragua",
+      "capital": "Managua",
+      "country": "Nicaragua",
+      "sovereign": "Nicaragua",
+      "lat": 12.154962,
+      "lon": -86.270437
+    },
+    {
+      "id": "manama-bahrain",
+      "capital": "Manama",
+      "country": "Bahrain",
+      "sovereign": "Bahrain",
+      "lat": 26.236136,
+      "lon": 50.583052
+    },
+    {
+      "id": "manila-philippines",
+      "capital": "Manila",
+      "country": "Philippines",
+      "sovereign": "Philippines",
+      "lat": 14.606105,
+      "lon": 120.980271
+    },
+    {
+      "id": "maputo-mozambique",
+      "capital": "Maputo",
+      "country": "Mozambique",
+      "sovereign": "Mozambique",
+      "lat": -25.953332,
+      "lon": 32.587217
+    },
+    {
+      "id": "maseru-lesotho",
+      "capital": "Maseru",
+      "country": "Lesotho",
+      "sovereign": "Lesotho",
+      "lat": -29.316674,
+      "lon": 27.483273
+    },
+    {
+      "id": "mbabane-eswatini",
+      "capital": "Mbabane",
+      "country": "eSwatini",
+      "sovereign": "eSwatini",
+      "lat": -26.316651,
+      "lon": 31.133335
+    },
+    {
+      "id": "melekeok-palau",
+      "capital": "Melekeok",
+      "country": "Palau",
+      "sovereign": "Palau",
+      "lat": 7.487396,
+      "lon": 134.626549
+    },
+    {
+      "id": "mexico-city-mexico",
+      "capital": "Mexico City",
+      "country": "Mexico",
+      "sovereign": "Mexico",
+      "lat": 19.444388,
+      "lon": -99.132934
+    },
+    {
+      "id": "minsk-belarus",
+      "capital": "Minsk",
+      "country": "Belarus",
+      "sovereign": "Belarus",
+      "lat": 53.901923,
+      "lon": 27.564681
+    },
+    {
+      "id": "mogadishu-somalia",
+      "capital": "Mogadishu",
+      "country": "Somalia",
+      "sovereign": "Somalia",
+      "lat": 2.068627,
+      "lon": 45.364732
+    },
+    {
+      "id": "monaco-monaco",
+      "capital": "Monaco",
+      "country": "Monaco",
+      "sovereign": "Monaco",
+      "lat": 43.739646,
+      "lon": 7.406913
+    },
+    {
+      "id": "monrovia-liberia",
+      "capital": "Monrovia",
+      "country": "Liberia",
+      "sovereign": "Liberia",
+      "lat": 6.314582,
+      "lon": -10.79966
+    },
+    {
+      "id": "montevideo-uruguay",
+      "capital": "Montevideo",
+      "country": "Uruguay",
+      "sovereign": "Uruguay",
+      "lat": -34.905376,
+      "lon": -56.186823
+    },
+    {
+      "id": "moroni-comoros",
+      "capital": "Moroni",
+      "country": "Comoros",
+      "sovereign": "Comoros",
+      "lat": -11.704158,
+      "lon": 43.240244
+    },
+    {
+      "id": "moscow-russia",
+      "capital": "Moscow",
+      "country": "Russia",
+      "sovereign": "Russia",
+      "lat": 55.75411,
+      "lon": 37.613577
+    },
+    {
+      "id": "muscat-oman",
+      "capital": "Muscat",
+      "country": "Oman",
+      "sovereign": "Oman",
+      "lat": 23.585179,
+      "lon": 58.378311
+    },
+    {
+      "id": "n-djamena-chad",
+      "capital": "N'Djamena",
+      "country": "Chad",
+      "sovereign": "Chad",
+      "lat": 12.115042,
+      "lon": 15.047202
+    },
+    {
+      "id": "nairobi-kenya",
+      "capital": "Nairobi",
+      "country": "Kenya",
+      "sovereign": "Kenya",
+      "lat": -1.281401,
+      "lon": 36.814711
+    },
+    {
+      "id": "nassau-the-bahamas",
+      "capital": "Nassau",
+      "country": "The Bahamas",
+      "sovereign": "Bahamas, The",
+      "lat": 25.08339,
+      "lon": -77.350044
+    },
+    {
+      "id": "naypyidaw-myanmar",
+      "capital": "Naypyidaw",
+      "country": "Myanmar",
+      "sovereign": "Myanmar",
+      "lat": 19.768503,
+      "lon": 96.116673
+    },
+    {
+      "id": "new-delhi-india",
+      "capital": "New Delhi",
+      "country": "India",
+      "sovereign": "India",
+      "lat": 28.600023,
+      "lon": 77.19998
+    },
+    {
+      "id": "niamey-niger",
+      "capital": "Niamey",
+      "country": "Niger",
+      "sovereign": "Niger",
+      "lat": 13.518652,
+      "lon": 2.11471
+    },
+    {
+      "id": "nicosia-cyprus",
+      "capital": "Nicosia",
+      "country": "Cyprus",
+      "sovereign": "Cyprus",
+      "lat": 35.166677,
+      "lon": 33.366635
+    },
+    {
+      "id": "nouakchott-mauritania",
+      "capital": "Nouakchott",
+      "country": "Mauritania",
+      "sovereign": "Mauritania",
+      "lat": 18.086427,
+      "lon": -15.97534
+    },
+    {
+      "id": "nuku-alofa-tonga",
+      "capital": "Nuku'alofa",
+      "country": "Tonga",
+      "sovereign": "Tonga",
+      "lat": -21.138512,
+      "lon": -175.220564
+    },
+    {
+      "id": "nur-sultan-kazakhstan",
+      "capital": "Nur-Sultan",
+      "country": "Kazakhstan",
+      "sovereign": "Kazakhstan",
+      "lat": 51.181125,
+      "lon": 71.427774
+    },
+    {
+      "id": "oslo-norway",
+      "capital": "Oslo",
+      "country": "Norway",
+      "sovereign": "Kingdom of Norway",
+      "lat": 59.918636,
+      "lon": 10.748033
+    },
+    {
+      "id": "ottawa-canada",
+      "capital": "Ottawa",
+      "country": "Canada",
+      "sovereign": "Canada",
+      "lat": 45.418643,
+      "lon": -75.701961
+    },
+    {
+      "id": "ouagadougou-burkina-faso",
+      "capital": "Ouagadougou",
+      "country": "Burkina Faso",
+      "sovereign": "Burkina Faso",
+      "lat": 12.372262,
+      "lon": -1.52667
+    },
+    {
+      "id": "palikir-federated-states-of-micronesia",
+      "capital": "Palikir",
+      "country": "Federated States of Micronesia",
+      "sovereign": "Federated States of Micronesia",
+      "lat": 6.916644,
+      "lon": 158.149974
+    },
+    {
+      "id": "panama-city-panama",
+      "capital": "Panama City",
+      "country": "Panama",
+      "sovereign": "Panama",
+      "lat": 8.969963,
+      "lon": -79.534983
+    },
+    {
+      "id": "paramaribo-suriname",
+      "capital": "Paramaribo",
+      "country": "Suriname",
+      "sovereign": "Suriname",
+      "lat": 5.83503,
+      "lon": -55.167031
+    },
+    {
+      "id": "paris-france",
+      "capital": "Paris",
+      "country": "France",
+      "sovereign": "French Republic",
+      "lat": 48.858092,
+      "lon": 2.352992
+    },
+    {
+      "id": "phnom-penh-cambodia",
+      "capital": "Phnom Penh",
+      "country": "Cambodia",
+      "sovereign": "Cambodia",
+      "lat": 11.551976,
+      "lon": 104.914689
+    },
+    {
+      "id": "podgorica-montenegro",
+      "capital": "Podgorica",
+      "country": "Montenegro",
+      "sovereign": "Montenegro",
+      "lat": 42.465972,
+      "lon": 19.266307
+    },
+    {
+      "id": "port-louis-mauritius",
+      "capital": "Port Louis",
+      "country": "Mauritius",
+      "sovereign": "Mauritius",
+      "lat": -20.166639,
+      "lon": 57.499994
+    },
+    {
+      "id": "port-moresby-papua-new-guinea",
+      "capital": "Port Moresby",
+      "country": "Papua New Guinea",
+      "sovereign": "Papua New Guinea",
+      "lat": -9.464708,
+      "lon": 147.192504
+    },
+    {
+      "id": "port-vila-vanuatu",
+      "capital": "Port Vila",
+      "country": "Vanuatu",
+      "sovereign": "Vanuatu",
+      "lat": -17.73335,
+      "lon": 168.316641
+    },
+    {
+      "id": "port-au-prince-haiti",
+      "capital": "Port-au-Prince",
+      "country": "Haiti",
+      "sovereign": "Haiti",
+      "lat": 18.54297,
+      "lon": -72.33798
+    },
+    {
+      "id": "port-of-spain-trinidad-and-tobago",
+      "capital": "Port-of-Spain",
+      "country": "Trinidad and Tobago",
+      "sovereign": "Trinidad and Tobago",
+      "lat": 10.651997,
+      "lon": -61.517031
+    },
+    {
+      "id": "prague-czechia",
+      "capital": "Prague",
+      "country": "Czechia",
+      "sovereign": "Czechia",
+      "lat": 50.086967,
+      "lon": 14.422939
+    },
+    {
+      "id": "praia-cape-verde",
+      "capital": "Praia",
+      "country": "Cape Verde",
+      "sovereign": "Cape Verde",
+      "lat": 14.916698,
+      "lon": -23.516689
+    },
+    {
+      "id": "pretoria-south-africa",
+      "capital": "Pretoria",
+      "country": "South Africa",
+      "sovereign": "South Africa",
+      "lat": -25.704975,
+      "lon": 28.227483
+    },
+    {
+      "id": "pristina-kosovo",
+      "capital": "Pristina",
+      "country": "Kosovo",
+      "sovereign": "Kosovo",
+      "lat": 42.66671,
+      "lon": 21.165984
+    },
+    {
+      "id": "pyongyang-north-korea",
+      "capital": "Pyongyang",
+      "country": "North Korea",
+      "sovereign": "Korea, North",
+      "lat": 39.021385,
+      "lon": 125.752745
+    },
+    {
+      "id": "quito-ecuador",
+      "capital": "Quito",
+      "country": "Ecuador",
+      "sovereign": "Ecuador",
+      "lat": -0.213042,
+      "lon": -78.501997
+    },
+    {
+      "id": "rabat-morocco",
+      "capital": "Rabat",
+      "country": "Morocco",
+      "sovereign": "Morocco",
+      "lat": 34.025307,
+      "lon": -6.836408
+    },
+    {
+      "id": "reykjavik-iceland",
+      "capital": "Reykjavík",
+      "country": "Iceland",
+      "sovereign": "Iceland",
+      "lat": 64.143459,
+      "lon": -21.936546
+    },
+    {
+      "id": "riga-latvia",
+      "capital": "Riga",
+      "country": "Latvia",
+      "sovereign": "Latvia",
+      "lat": 56.950024,
+      "lon": 24.099965
+    },
+    {
+      "id": "riyadh-saudi-arabia",
+      "capital": "Riyadh",
+      "country": "Saudi Arabia",
+      "sovereign": "Saudi Arabia",
+      "lat": 24.634497,
+      "lon": 46.720487
+    },
+    {
+      "id": "rome-italy",
+      "capital": "Rome",
+      "country": "Italy",
+      "sovereign": "Italy",
+      "lat": 41.897902,
+      "lon": 12.481313
+    },
+    {
+      "id": "roseau-dominica",
+      "capital": "Roseau",
+      "country": "Dominica",
+      "sovereign": "Dominica",
+      "lat": 15.301016,
+      "lon": -61.387013
+    },
+    {
+      "id": "saint-george-s-grenada",
+      "capital": "Saint George's",
+      "country": "Grenada",
+      "sovereign": "Grenada",
+      "lat": 12.052633,
+      "lon": -61.741643
+    },
+    {
+      "id": "saint-john-s-antigua-and-barbuda",
+      "capital": "Saint John's",
+      "country": "Antigua and Barbuda",
+      "sovereign": "Antigua and Barbuda",
+      "lat": 17.118036,
+      "lon": -61.850034
+    },
+    {
+      "id": "san-jose-costa-rica",
+      "capital": "San José",
+      "country": "Costa Rica",
+      "sovereign": "Costa Rica",
+      "lat": 9.930371,
+      "lon": -84.078814
+    },
+    {
+      "id": "san-marino-san-marino",
+      "capital": "San Marino",
+      "country": "San Marino",
+      "sovereign": "San Marino",
+      "lat": 43.936096,
+      "lon": 12.44177
+    },
+    {
+      "id": "san-salvador-el-salvador",
+      "capital": "San Salvador",
+      "country": "El Salvador",
+      "sovereign": "El Salvador",
+      "lat": 13.70328,
+      "lon": -89.215576
+    },
+    {
+      "id": "sanaa-yemen",
+      "capital": "Sanaa",
+      "country": "Yemen",
+      "sovereign": "Yemen",
+      "lat": 15.356679,
+      "lon": 44.204648
+    },
+    {
+      "id": "santiago-chile",
+      "capital": "Santiago",
+      "country": "Chile",
+      "sovereign": "Chile",
+      "lat": -33.440205,
+      "lon": -70.650504
+    },
+    {
+      "id": "santo-domingo-dominican-republic",
+      "capital": "Santo Domingo",
+      "country": "Dominican Republic",
+      "sovereign": "Dominican Republic",
+      "lat": 18.470745,
+      "lon": -69.929742
+    },
+    {
+      "id": "sao-tome-sao-tome-and-principe",
+      "capital": "São Tomé",
+      "country": "Sao Tome and Principe",
+      "sovereign": "Sao Tome and Principe",
+      "lat": 0.337466,
+      "lon": 6.72965
+    },
+    {
+      "id": "sarajevo-bosnia-and-herzegovina",
+      "capital": "Sarajevo",
+      "country": "Bosnia and Herzegovina",
+      "sovereign": "Bosnia and Herzegovina",
+      "lat": 43.850022,
+      "lon": 18.383002
+    },
+    {
+      "id": "seoul-south-korea",
+      "capital": "Seoul",
+      "country": "South Korea",
+      "sovereign": "Korea, South",
+      "lat": 37.568295,
+      "lon": 126.997785
+    },
+    {
+      "id": "singapore-singapore",
+      "capital": "Singapore",
+      "country": "Singapore",
+      "sovereign": "Singapore",
+      "lat": 1.294979,
+      "lon": 103.853875
+    },
+    {
+      "id": "skopje-north-macedonia",
+      "capital": "Skopje",
+      "country": "North Macedonia",
+      "sovereign": "North Macedonia",
+      "lat": 42.000006,
+      "lon": 21.433461
+    },
+    {
+      "id": "sofia-bulgaria",
+      "capital": "Sofia",
+      "country": "Bulgaria",
+      "sovereign": "Bulgaria",
+      "lat": 42.685295,
+      "lon": 23.314708
+    },
+    {
+      "id": "stockholm-sweden",
+      "capital": "Stockholm",
+      "country": "Sweden",
+      "sovereign": "Sweden",
+      "lat": 59.324127,
+      "lon": 18.0663
+    },
+    {
+      "id": "sucre-bolivia",
+      "capital": "Sucre",
+      "country": "Bolivia",
+      "sovereign": "Bolivia",
+      "lat": -19.040971,
+      "lon": -65.259516
+    },
+    {
+      "id": "suva-fiji",
+      "capital": "Suva",
+      "country": "Fiji",
+      "sovereign": "Fiji",
+      "lat": -18.133016,
+      "lon": 178.441707
+    },
+    {
+      "id": "taipei-taiwan",
+      "capital": "Taipei",
+      "country": "Taiwan",
+      "sovereign": "Taiwan",
+      "lat": 25.035833,
+      "lon": 121.568333
+    },
+    {
+      "id": "tallinn-estonia",
+      "capital": "Tallinn",
+      "country": "Estonia",
+      "sovereign": "Estonia",
+      "lat": 59.433877,
+      "lon": 24.728041
+    },
+    {
+      "id": "tarawa-kiribati",
+      "capital": "Tarawa",
+      "country": "Kiribati",
+      "sovereign": "Kiribati",
+      "lat": 1.338188,
+      "lon": 173.017571
+    },
+    {
+      "id": "tashkent-uzbekistan",
+      "capital": "Tashkent",
+      "country": "Uzbekistan",
+      "sovereign": "Uzbekistan",
+      "lat": 41.303828,
+      "lon": 69.268823
+    },
+    {
+      "id": "tbilisi-georgia",
+      "capital": "Tbilisi",
+      "country": "Georgia",
+      "sovereign": "Georgia",
+      "lat": 41.726956,
+      "lon": 44.78885
+    },
+    {
+      "id": "tegucigalpa-honduras",
+      "capital": "Tegucigalpa",
+      "country": "Honduras",
+      "sovereign": "Honduras",
+      "lat": 14.103991,
+      "lon": -87.219475
+    },
+    {
+      "id": "tehran-iran",
+      "capital": "Tehran",
+      "country": "Iran",
+      "sovereign": "Iran",
+      "lat": 35.673889,
+      "lon": 51.422398
+    },
+    {
+      "id": "thimphu-bhutan",
+      "capital": "Thimphu",
+      "country": "Bhutan",
+      "sovereign": "Bhutan",
+      "lat": 27.472986,
+      "lon": 89.639014
+    },
+    {
+      "id": "tirana-albania",
+      "capital": "Tirana",
+      "country": "Albania",
+      "sovereign": "Albania",
+      "lat": 41.327541,
+      "lon": 19.818883
+    },
+    {
+      "id": "tokyo-japan",
+      "capital": "Tokyo",
+      "country": "Japan",
+      "sovereign": "Japan",
+      "lat": 35.686963,
+      "lon": 139.749462
+    },
+    {
+      "id": "tripoli-libya",
+      "capital": "Tripoli",
+      "country": "Libya",
+      "sovereign": "Libya",
+      "lat": 32.8925,
+      "lon": 13.180012
+    },
+    {
+      "id": "tunis-tunisia",
+      "capital": "Tunis",
+      "country": "Tunisia",
+      "sovereign": "Tunisia",
+      "lat": 36.802778,
+      "lon": 10.179678
+    },
+    {
+      "id": "ulaanbaatar-mongolia",
+      "capital": "Ulaanbaatar",
+      "country": "Mongolia",
+      "sovereign": "Mongolia",
+      "lat": 47.918619,
+      "lon": 106.91467
+    },
+    {
+      "id": "vaduz-liechtenstein",
+      "capital": "Vaduz",
+      "country": "Liechtenstein",
+      "sovereign": "Liechtenstein",
+      "lat": 47.133724,
+      "lon": 9.51667
+    },
+    {
+      "id": "valletta-malta",
+      "capital": "Valletta",
+      "country": "Malta",
+      "sovereign": "Malta",
+      "lat": 35.899732,
+      "lon": 14.514711
+    },
+    {
+      "id": "vatican-city-vatican",
+      "capital": "Vatican City",
+      "country": "Vatican",
+      "sovereign": "Vatican",
+      "lat": 41.903282,
+      "lon": 12.453387
+    },
+    {
+      "id": "victoria-seychelles",
+      "capital": "Victoria",
+      "country": "Seychelles",
+      "sovereign": "Seychelles",
+      "lat": -4.616632,
+      "lon": 55.44999
+    },
+    {
+      "id": "vienna-austria",
+      "capital": "Vienna",
+      "country": "Austria",
+      "sovereign": "Austria",
+      "lat": 48.201961,
+      "lon": 16.364693
+    },
+    {
+      "id": "vientiane-laos",
+      "capital": "Vientiane",
+      "country": "Laos",
+      "sovereign": "Laos",
+      "lat": 17.966693,
+      "lon": 102.59998
+    },
+    {
+      "id": "vilnius-lithuania",
+      "capital": "Vilnius",
+      "country": "Lithuania",
+      "sovereign": "Lithuania",
+      "lat": 54.683366,
+      "lon": 25.316635
+    },
+    {
+      "id": "warsaw-poland",
+      "capital": "Warsaw",
+      "country": "Poland",
+      "sovereign": "Poland",
+      "lat": 52.230872,
+      "lon": 21.005347
+    },
+    {
+      "id": "washington-d-c-united-states-of-america",
+      "capital": "Washington,  D.C.",
+      "country": "United States of America",
+      "sovereign": "United States",
+      "lat": 38.901495,
+      "lon": -77.011364
+    },
+    {
+      "id": "wellington-new-zealand",
+      "capital": "Wellington",
+      "country": "New Zealand",
+      "sovereign": "New Zealand",
+      "lat": -41.292068,
+      "lon": 174.777201
+    },
+    {
+      "id": "windhoek-namibia",
+      "capital": "Windhoek",
+      "country": "Namibia",
+      "sovereign": "Namibia",
+      "lat": -22.570006,
+      "lon": 17.083546
+    },
+    {
+      "id": "yamoussoukro-ivory-coast",
+      "capital": "Yamoussoukro",
+      "country": "Ivory Coast",
+      "sovereign": "Ivory Coast",
+      "lat": 6.818381,
+      "lon": -5.275503
+    },
+    {
+      "id": "yaounde-cameroon",
+      "capital": "Yaoundé",
+      "country": "Cameroon",
+      "sovereign": "Cameroon",
+      "lat": 3.868647,
+      "lon": 11.514705
+    },
+    {
+      "id": "yerevan-armenia",
+      "capital": "Yerevan",
+      "country": "Armenia",
+      "sovereign": "Armenia",
+      "lat": 40.183097,
+      "lon": 44.511606
+    },
+    {
+      "id": "zagreb-croatia",
+      "capital": "Zagreb",
+      "country": "Croatia",
+      "sovereign": "Croatia",
+      "lat": 45.800007,
+      "lon": 15.999995
+    }
+  ]
+}
