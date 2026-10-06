@@ -1,6 +1,6 @@
-# Loughlane Capital Daily
+# Daily Capital
 
-A standalone daily capital-city guessing game for Loughlane Digital.
+A standalone daily capital-city guessing game by Loughlane Digital.
 
 ## Run Locally
 

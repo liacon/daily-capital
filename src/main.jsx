@@ -90,9 +90,10 @@ function scoreGuess(guess, target) {
   }
   const distance = distanceKm(guess, target);
   const closeness = Math.max(0, 1 - distance / MAX_DISTANCE_KM);
+  const score = Math.max(0, Math.round(100 * Math.exp(-distance / SCORE_DECAY_KM) * closeness));
   return {
     distance,
-    score: Math.max(0, Math.round(100 * Math.exp(-distance / SCORE_DECAY_KM) * closeness))
+    score: Math.min(99, score)
   };
 }
 
@@ -157,7 +158,7 @@ function buildShareText(puzzleNumber, guesses, bestBeforeSolve) {
   const pattern = guesses.map((guess) => shareSquare(guess.score)).join("");
   const best = bestBeforeSolve > 0 ? `Best clue ${bestBeforeSolve}/100` : "No warm-up guesses";
   return [
-    `Loughlane Capital #${puzzleNumber}`,
+    `Daily Capital #${puzzleNumber}`,
     `Solved in ${guesses.length} ${guesses.length === 1 ? "guess" : "guesses"}`,
     best,
     pattern,
@@ -169,7 +170,7 @@ function buildRevealShareText(puzzleNumber, guesses, bestBeforeSolve) {
   const pattern = guesses.length ? guesses.map((guess) => shareSquare(guess.score)).join("") : "No guesses";
   const best = bestBeforeSolve > 0 ? `Best clue ${bestBeforeSolve}/100` : "No warm-up guesses";
   return [
-    `Loughlane Capital #${puzzleNumber}`,
+    `Daily Capital #${puzzleNumber}`,
     `Revealed after ${guesses.length} ${guesses.length === 1 ? "guess" : "guesses"}`,
     best,
     pattern,
@@ -900,7 +901,7 @@ function App() {
       <header className="site-header">
         <div>
           <p className="eyebrow">Loughlane Digital</p>
-          <h1>Capital Daily</h1>
+          <h1>Daily Capital</h1>
         </div>
         <div className="puzzle-meta" aria-label="Puzzle details">
           <span>{demoTarget ? "Preview" : `#${puzzleNumber}`}</span>
@@ -1069,6 +1070,10 @@ function App() {
           </section>
         </aside>
       </section>
+      <div className="builder-mark" aria-label="Built by Loughlane Digital">
+        <span>Built by</span>
+        <img src="/loughlane-digital-logo.jpeg" alt="Loughlane Digital" />
+      </div>
     </main>
   );
 }
