@@ -13,6 +13,9 @@ const SCORE_DECAY_KM = 2400;
 const TARGET_COLOR = "#1f9f65";
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
+const CAPITAL_ALIASES = {
+  "k-benhavn-denmark": ["København", "Kobenhavn"]
+};
 
 function utcDateString(date = new Date()) {
   return date.toISOString().slice(0, 10);
@@ -66,6 +69,32 @@ function targetFromUrl() {
   const targetId = params.get("target");
   if (!targetId) return null;
   return CAPITALS.find((capital) => capital.id === targetId) || null;
+}
+
+function normalizeSearchValue(value) {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function searchTermsForCapital(capital) {
+  return [capital.capital, capital.country, ...(CAPITAL_ALIASES[capital.id] || [])];
+}
+
+function capitalMatchesQuery(capital, query) {
+  return searchTermsForCapital(capital).some((term) => normalizeSearchValue(term).includes(query));
+}
+
+function capitalMatchesInput(capital, inputValue) {
+  const query = normalizeSearchValue(inputValue);
+  const cityCountry = normalizeSearchValue(`${capital.capital}, ${capital.country}`);
+
+  return (
+    query === cityCountry ||
+    searchTermsForCapital(capital).some((term) => normalizeSearchValue(term) === query)
+  );
 }
 
 function toRadians(value) {
@@ -134,6 +163,36 @@ function loadStore() {
 
 function saveStore(store) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+}
+
+function guessesFromSavedPlay(play, target) {
+  if (!play?.guesses || play.targetId !== target.id) return [];
+
+  return play.guesses.flatMap((guessId) => {
+    const capital = CAPITALS.find((item) => item.id === guessId);
+    if (!capital) return [];
+    return [{ ...capital, ...scoreGuess(capital, target) }];
+  });
+}
+
+function initialGuessesForToday(store, today, target, demoTarget) {
+  if (demoTarget) return [];
+
+  const savedGuesses = guessesFromSavedPlay(store.plays?.[today], target);
+  if (savedGuesses.length > 0) return savedGuesses;
+
+  if (store.history?.[today]?.won) {
+    return [{ ...target, distance: 0, score: 100, restored: true }];
+  }
+
+  return [];
+}
+
+function initialRevealForToday(store, today, target, demoTarget) {
+  if (demoTarget) return false;
+  const savedPlay = store.plays?.[today];
+  if (savedPlay?.targetId === target.id && savedPlay.revealed) return true;
+  return Boolean(store.history?.[today]?.revealed && !store.history?.[today]?.won);
 }
 
 function addDays(dateString, offset) {
@@ -731,12 +790,17 @@ function App() {
   const puzzleNumber = dayNumber(today);
   const demoTarget = useMemo(() => targetFromUrl(), []);
   const target = useMemo(() => demoTarget || targetForDate(today), [demoTarget, today]);
-  const [input, setInput] = useState("");
-  const [guesses, setGuesses] = useState([]);
-  const [message, setMessage] = useState("");
   const [store, setStore] = useState(loadStore);
+  const [input, setInput] = useState("");
+  const [guesses, setGuesses] = useState(() => initialGuessesForToday(store, today, target, demoTarget));
+  const [message, setMessage] = useState(() =>
+    initialGuessesForToday(store, today, target, demoTarget).some((guess) => guess.id === target.id) ||
+    initialRevealForToday(store, today, target, demoTarget)
+      ? "You've already completed today's puzzle. Come back tomorrow for a new capital."
+      : ""
+  );
   const [copied, setCopied] = useState(false);
-  const [revealed, setRevealed] = useState(false);
+  const [revealed, setRevealed] = useState(() => initialRevealForToday(store, today, target, demoTarget));
   const solvePanelRef = useRef(null);
 
   const won = guesses.some((guess) => guess.id === target.id);
@@ -753,11 +817,9 @@ function App() {
     .reduce((best, guess) => Math.max(best, guess.score), 0);
 
   const suggestions = useMemo(() => {
-    const query = input.trim().toLowerCase();
+    const query = normalizeSearchValue(input);
     if (!query) return CAPITALS.slice(0, 8);
-    return CAPITALS.filter((capital) =>
-      `${capital.capital} ${capital.country}`.toLowerCase().includes(query)
-    ).slice(0, 8);
+    return CAPITALS.filter((capital) => capitalMatchesQuery(capital, query)).slice(0, 8);
   }, [input]);
 
   const recentHistory = useMemo(() => {
@@ -774,6 +836,34 @@ function App() {
   }, [demoTarget, puzzleNumber]);
 
   useEffect(() => {
+    if (demoTarget || (guesses.length === 0 && !revealed)) return;
+
+    const nextPlay = {
+      puzzleNumber,
+      targetId: target.id,
+      guesses: guesses.map((guess) => guess.id),
+      revealed,
+      won,
+      completed: solved
+    };
+
+    setStore((current) => {
+      const currentPlay = current.plays?.[today];
+      if (JSON.stringify(currentPlay) === JSON.stringify(nextPlay)) return current;
+
+      const next = {
+        ...current,
+        plays: {
+          ...(current.plays || {}),
+          [today]: nextPlay
+        }
+      };
+      saveStore(next);
+      return next;
+    });
+  }, [demoTarget, guesses, puzzleNumber, revealed, solved, target.id, today, won]);
+
+  useEffect(() => {
     if (!won || demoTarget) return;
     setStore((current) => {
       if (current.history[today]?.won) return current;
@@ -784,6 +874,7 @@ function App() {
           [today]: {
             won: true,
             guesses: guesses.length,
+            guessIds: guesses.map((guess) => guess.id),
             puzzleNumber
           }
         }
@@ -809,6 +900,7 @@ function App() {
             won: false,
             revealed: true,
             guesses: guesses.length,
+            guessIds: guesses.map((guess) => guess.id),
             puzzleNumber
           }
         }
@@ -844,11 +936,7 @@ function App() {
   function submitGuess(capital) {
     const selected =
       capital ||
-      CAPITALS.find(
-        (item) =>
-          item.capital.toLowerCase() === input.trim().toLowerCase() ||
-          `${item.capital}, ${item.country}`.toLowerCase() === input.trim().toLowerCase()
-      );
+      CAPITALS.find((item) => capitalMatchesInput(item, input));
 
     if (!selected) {
       setMessage("Choose a capital from the list.");
@@ -925,7 +1013,7 @@ function App() {
           </div>
 
           <div className={solved ? "win-banner is-visible" : "win-banner"}>
-            <span>Target revealed</span>
+            <span>Daily Capital:</span>
             <strong>
               {target.capital}, {target.country}
             </strong>

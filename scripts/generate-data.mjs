@@ -24,6 +24,14 @@ function slugify(value) {
     .replace(/(^-|-$)/g, "");
 }
 
+const CAPITAL_NAME_OVERRIDES = {
+  "Denmark|København": "Copenhagen"
+};
+
+function displayCapitalName(props) {
+  return CAPITAL_NAME_OVERRIDES[`${props.adm0name}|${props.name}`] || props.name;
+}
+
 const places = readJson(placesPath);
 const countries = readJson(countriesPath);
 
@@ -37,14 +45,16 @@ const capitals = places.features
     const [lon, lat] = feature.geometry.coordinates;
     return {
       id: `${slugify(props.name)}-${slugify(props.adm0name)}`,
-      capital: props.name,
+      capital: displayCapitalName(props),
       country: props.adm0name,
       sovereign: props.sov0name,
       lat: Number(lat.toFixed(6)),
-      lon: Number(lon.toFixed(6))
+      lon: Number(lon.toFixed(6)),
+      sortName: props.name
     };
   })
-  .sort((a, b) => a.capital.localeCompare(b.capital, "en"));
+  .sort((a, b) => a.sortName.localeCompare(b.sortName, "en"))
+  .map(({ sortName, ...capital }) => capital);
 
 const world = {
   type: "FeatureCollection",
