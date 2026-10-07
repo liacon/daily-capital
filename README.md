@@ -35,8 +35,19 @@ The production build is written to `dist/`.
 
 - SEO/social metadata is included in `index.html`.
 - The first-time hint is stored locally after dismissal.
-- Lightweight analytics hooks call `window.plausible(...)` when Plausible is present, otherwise `window.dataLayer.push(...)` when a data layer exists. In development they log to the console.
+- Google Analytics 4 can be enabled by setting `VITE_GA_MEASUREMENT_ID` to the GA4 Measurement ID, for example `G-XXXXXXXXXX`, before building.
+- Lightweight analytics hooks call `window.plausible(...)` when Plausible is present, otherwise `window.gtag(...)` for GA4, otherwise `window.dataLayer.push(...)` when a data layer exists. In development they log to the console.
 - Useful events include `game_loaded`, `guess_submitted`, `puzzle_solved`, `puzzle_revealed`, `share_result`, `map_mode_changed`, and `explore_link_clicked`.
+
+### Google Analytics Setup
+
+For local testing, copy `.env.example` to `.env.local` and replace the placeholder with the Measurement ID from Google Analytics:
+
+```bash
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+For Cloudflare, add the same value as a production build environment variable, then redeploy. GA4 will receive the built-in gameplay events after the new build is live.
 
 ## Data Source
 

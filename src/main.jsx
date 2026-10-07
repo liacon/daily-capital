@@ -13,6 +13,7 @@ const SCORE_DECAY_KM = 2400;
 const TARGET_COLOR = "#1f9f65";
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 const CAPITAL_ALIASES = {
   "k-benhavn-denmark": ["København", "Kobenhavn"]
 };
@@ -245,10 +246,35 @@ function shareSquare(score) {
   return "🟦";
 }
 
+function installGoogleAnalytics(measurementId) {
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  if (!measurementId || window.__dailyCapitalGaInstalled) return;
+
+  window.__dailyCapitalGaInstalled = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId, {
+    send_page_view: true
+  });
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+  document.head.appendChild(script);
+}
+
 function trackEvent(name, props = {}) {
   if (typeof window === "undefined") return;
   if (typeof window.plausible === "function") {
     window.plausible(name, { props });
+    return;
+  }
+  if (typeof window.gtag === "function") {
+    window.gtag("event", name, props);
     return;
   }
   if (Array.isArray(window.dataLayer)) {
@@ -827,6 +853,10 @@ function App() {
       .sort(([a], [b]) => b.localeCompare(a))
       .slice(0, 7);
   }, [store.history]);
+
+  useEffect(() => {
+    installGoogleAnalytics(GA_MEASUREMENT_ID);
+  }, []);
 
   useEffect(() => {
     trackEvent("game_loaded", {
