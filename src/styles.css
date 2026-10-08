@@ -691,6 +691,34 @@ button:disabled {
   font-size: 0.9rem;
 }
 
+.info-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+  padding-bottom: 58px;
+}
+
+.info-panel article {
+  border: 1px solid #d8e2de;
+  border-radius: 8px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+.info-panel h2 {
+  margin: 4px 0 8px;
+  color: #1e2528;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.info-panel p {
+  margin: 0;
+  color: #4b5b5f;
+  font-size: 0.95rem;
+}
+
 .builder-mark {
   position: fixed;
   right: 14px;
@@ -751,6 +779,10 @@ button:disabled {
   }
 
   .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .info-panel {
     grid-template-columns: 1fr;
   }
 

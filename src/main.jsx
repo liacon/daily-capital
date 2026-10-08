@@ -811,6 +811,38 @@ function SolvePanel({ target, guesses, history, streak, demoTarget, revealed }) 
   );
 }
 
+function InfoPanel() {
+  return (
+    <section className="info-panel" aria-label="About Daily Capital">
+      <article>
+        <span className="fact-label">About</span>
+        <h2>Daily Capital is a daily geography guessing game.</h2>
+        <p>
+          Each day has one hidden world capital. Make capital-city guesses, compare proximity
+          scores, and use the map to narrow down the answer before revealing the city facts.
+        </p>
+      </article>
+      <article>
+        <span className="fact-label">How to play</span>
+        <h2>Guess the capital, then follow the score.</h2>
+        <p>
+          Scores run from 0 to 100. Warmer colours and larger dots mean your guess is closer to
+          the Daily Capital. There are no arrows or connecting lines, and the answer stays hidden
+          until you solve it or reveal it.
+        </p>
+      </article>
+      <article>
+        <span className="fact-label">Privacy</span>
+        <h2>No account is needed to play.</h2>
+        <p>
+          Your streak and play history are saved only in this browser. Daily Capital uses Google
+          Analytics to understand aggregate activity such as visits, solves, reveals, and shares.
+        </p>
+      </article>
+    </section>
+  );
+}
+
 function App() {
   const today = utcDateString();
   const puzzleNumber = dayNumber(today);
@@ -1188,6 +1220,7 @@ function App() {
           </section>
         </aside>
       </section>
+      <InfoPanel />
       <div className="builder-mark" aria-label="Built by Loughlane Digital">
         <span>Built by</span>
         <img src="/loughlane-digital-logo.jpeg" alt="Loughlane Digital" />
