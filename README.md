@@ -28,7 +28,7 @@ The production build is written to `dist/`.
 - The hidden target is revealed only after it is guessed.
 - Players can give up and reveal the target; reveals do not count as wins or streak days.
 - Wins, guess counts, streak, and recent history are stored locally in the browser.
-- The share button copies a non-spoiler result with the puzzle number, guess count, best pre-solve clue, and a colored proximity pattern.
+- The share button copies a non-spoiler result with the puzzle number, guess count, colored proximity pattern, streak context, and the public site URL.
 - After solving, a fact panel shows city/location details, current weather from Open-Meteo, exploration links, and local player stats.
 
 ## Launch Notes

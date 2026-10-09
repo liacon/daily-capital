@@ -14,6 +14,7 @@ const TARGET_COLOR = "#1f9f65";
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const SITE_URL = "https://daily-capital.com";
 const CAPITAL_ALIASES = {
   "k-benhavn-denmark": ["København", "Kobenhavn"]
 };
@@ -214,36 +215,43 @@ function computeStreak(history, today) {
   return streak;
 }
 
-function buildShareText(puzzleNumber, guesses, bestBeforeSolve) {
+function pluralizeGuess(count) {
+  return `${count} ${count === 1 ? "guess" : "guesses"}`;
+}
+
+function buildShareText(puzzleNumber, guesses, streak) {
   const pattern = guesses.map((guess) => shareSquare(guess.score)).join("");
-  const best = bestBeforeSolve > 0 ? `Best clue ${bestBeforeSolve}/100` : "No warm-up guesses";
+  const streakLine = streak > 0 ? `🔥 ${streak}-day streak` : "🔥 First day on the board";
   return [
-    `Daily Capital #${puzzleNumber}`,
-    `Solved in ${guesses.length} ${guesses.length === 1 ? "guess" : "guesses"}`,
-    best,
+    "🌍 DAILY CAPITAL",
+    `Puzzle #${puzzleNumber} · Solved in ${pluralizeGuess(guesses.length)}`,
     pattern,
-    "https://github.com/liacon/LoughlaneDigital"
+    streakLine,
+    "Can you find today's capital faster?",
+    SITE_URL
   ].join("\n");
 }
 
 function buildRevealShareText(puzzleNumber, guesses, bestBeforeSolve) {
-  const pattern = guesses.length ? guesses.map((guess) => shareSquare(guess.score)).join("") : "No guesses";
-  const best = bestBeforeSolve > 0 ? `Best clue ${bestBeforeSolve}/100` : "No warm-up guesses";
+  const pattern = guesses.length ? guesses.map((guess) => shareSquare(guess.score)).join("") : "No guesses yet";
+  const best = bestBeforeSolve > 0 ? `Best clue: ${bestBeforeSolve}/100` : "No warm-up guesses";
   return [
-    `Daily Capital #${puzzleNumber}`,
-    `Revealed after ${guesses.length} ${guesses.length === 1 ? "guess" : "guesses"}`,
-    best,
+    "🌍 DAILY CAPITAL",
+    `Puzzle #${puzzleNumber} · Revealed after ${pluralizeGuess(guesses.length)}`,
     pattern,
-    "https://github.com/liacon/LoughlaneDigital"
+    `💭 ${best}`,
+    "Can you find today's capital?",
+    SITE_URL
   ].join("\n");
 }
 
 function shareSquare(score) {
-  if (score === 100) return "🟩";
-  if (score >= 80) return "🟥";
-  if (score >= 55) return "🟧";
-  if (score >= 30) return "🟨";
-  return "🟦";
+  if (score === 100) return "🎯";
+  if (score >= 85) return "🟢";
+  if (score >= 65) return "🟠";
+  if (score >= 42) return "🟡";
+  if (score >= 20) return "🔵";
+  return "⚪";
 }
 
 function installGoogleAnalytics(measurementId) {
@@ -1031,7 +1039,7 @@ function App() {
   async function shareResult() {
     const text = revealed
       ? buildRevealShareText(puzzleNumber, guesses, bestBeforeSolve)
-      : buildShareText(puzzleNumber, guesses, bestBeforeSolve);
+      : buildShareText(puzzleNumber, guesses, streak);
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
