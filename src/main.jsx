@@ -10,14 +10,31 @@ const GAME_START = "2024-01-01";
 const STORAGE_KEY = "loughlane-capital-daily-v1";
 const MAX_DISTANCE_KM = 20015;
 const SCORE_DECAY_KM = 3500;
+const OCEANIA_SCORE_DECAY_KM = 6500;
 const TARGET_COLOR = "#1f9f65";
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 const SITE_URL = "https://daily-capital.com";
 const CAPITAL_ALIASES = {
-  "k-benhavn-denmark": ["København", "Kobenhavn"]
+  "k-benhavn-denmark": ["København", "Kobenhavn"],
+  "nur-sultan-kazakhstan": ["Nur-Sultan", "Nursultan"]
 };
+const OCEANIA_COUNTRIES = new Set([
+  "Australia",
+  "Fiji",
+  "Kiribati",
+  "Marshall Islands",
+  "Federated States of Micronesia",
+  "New Zealand",
+  "Palau",
+  "Papua New Guinea",
+  "Samoa",
+  "Solomon Islands",
+  "Tonga",
+  "Tuvalu",
+  "Vanuatu"
+]);
 
 function utcDateString(date = new Date()) {
   return date.toISOString().slice(0, 10);
@@ -121,7 +138,8 @@ function scoreGuess(guess, target) {
   }
   const distance = distanceKm(guess, target);
   const closeness = Math.max(0, 1 - distance / MAX_DISTANCE_KM);
-  const score = Math.max(0, Math.round(100 * Math.exp(-distance / SCORE_DECAY_KM) * closeness));
+  const decay = OCEANIA_COUNTRIES.has(target.country) ? OCEANIA_SCORE_DECAY_KM : SCORE_DECAY_KM;
+  const score = Math.max(0, Math.round(100 * Math.exp(-distance / decay) * closeness));
   return {
     distance,
     score: Math.min(99, score)

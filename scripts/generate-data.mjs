@@ -26,7 +26,8 @@ function slugify(value) {
 
 const CAPITAL_NAME_OVERRIDES = {
   "Andorra|Andorra": "Andorra la Vella",
-  "Denmark|København": "Copenhagen"
+  "Denmark|København": "Copenhagen",
+  "Kazakhstan|Nur-Sultan": "Astana"
 };
 
 function displayCapitalName(props) {

@@ -24,6 +24,7 @@ The production build is written to `dist/`.
 - Guess dots become larger and warmer in color as their proximity score improves.
 - The solved target is revealed with a green marker and halo.
 - Scores are 0-100, using great-circle distance against the hidden target and a tuned curve that gives better contrast between nearby and far-away guesses. Exact matches score 100.
+- Oceania targets use a gentler distance curve so island-region guesses feel appropriately warm despite the larger gaps between neighbouring capitals.
 - There are no arrows, bearings, or connecting lines; only proximity, map position, and the ordered guess list are shown.
 - The hidden target is revealed only after it is guessed.
 - Players can give up and reveal the target; reveals do not count as wins or streak days.
