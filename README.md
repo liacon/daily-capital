@@ -17,7 +17,7 @@ The production build is written to `dist/`.
 - Each UTC date maps deterministically to one hidden capital city.
 - Daily targets are drawn from a deterministic shuffled deck, so all 199 capitals appear once before any repeats.
 - The daily puzzle number starts at `#1` on 2024-01-01.
-- Players search for a capital, make guesses, and see each guess as a dot on a flat world map.
+- Players search for a capital, make guesses, and see each guess as a dot on a flat world map. Suggestions match capital names and accepted aliases, not country names.
 - The map can be switched between flat and globe views.
 - Flat mode can be dragged and zoomed with the mouse wheel or zoom/reset buttons.
 - Globe mode rotates to center the latest guess, then can be manually rotated by dragging and zoomed with the same controls.

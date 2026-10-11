@@ -99,11 +99,16 @@ function normalizeSearchValue(value) {
 }
 
 function searchTermsForCapital(capital) {
-  return [capital.capital, capital.country, ...(CAPITAL_ALIASES[capital.id] || [])];
+  return [capital.capital, ...(CAPITAL_ALIASES[capital.id] || [])];
 }
 
-function capitalMatchesQuery(capital, query) {
-  return searchTermsForCapital(capital).some((term) => normalizeSearchValue(term).includes(query));
+function rankCapitalSuggestion(capital, query) {
+  const normalizedTerms = searchTermsForCapital(capital).map(normalizeSearchValue);
+  if (normalizedTerms.some((term) => term === query)) return 0;
+  if (normalizedTerms.some((term) => term.startsWith(query))) return 1;
+  if (normalizedTerms.some((term) => term.split(/\s+/).some((word) => word.startsWith(query)))) return 2;
+  if (normalizedTerms.some((term) => term.includes(query))) return 3;
+  return Number.POSITIVE_INFINITY;
 }
 
 function capitalMatchesInput(capital, inputValue) {
@@ -903,7 +908,14 @@ function App() {
   const suggestions = useMemo(() => {
     const query = normalizeSearchValue(input);
     if (!query) return CAPITALS.slice(0, 8);
-    return CAPITALS.filter((capital) => capitalMatchesQuery(capital, query)).slice(0, 8);
+    return CAPITALS.map((capital) => ({
+      capital,
+      rank: rankCapitalSuggestion(capital, query)
+    }))
+      .filter((item) => Number.isFinite(item.rank))
+      .sort((a, b) => a.rank - b.rank || a.capital.capital.localeCompare(b.capital.capital, "en"))
+      .map((item) => item.capital)
+      .slice(0, 8);
   }, [input]);
 
   const recentHistory = useMemo(() => {
@@ -1027,7 +1039,7 @@ function App() {
       CAPITALS.find((item) => capitalMatchesInput(item, input));
 
     if (!selected) {
-      setMessage("Choose a capital from the list.");
+      setMessage("Only capital cities can be guessed.");
       return;
     }
 
@@ -1138,7 +1150,6 @@ function App() {
                 autoComplete="off"
                 disabled={solved}
                 id="capital-search"
-                list="capital-options"
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Start typing, e.g. Lisbon"
                 type="search"
@@ -1153,11 +1164,6 @@ function App() {
                 Give up / reveal
               </button>
             )}
-            <datalist id="capital-options">
-              {CAPITALS.map((capital) => (
-                <option key={capital.id} value={`${capital.capital}, ${capital.country}`} />
-              ))}
-            </datalist>
           </form>
 
           {!solved && input.trim() && (
