@@ -7,6 +7,7 @@
     "dev": "vite",
     "generate:data": "node scripts/generate-data.mjs",
     "validate:data": "node scripts/validate-data.mjs",
+    "test": "node --test",
     "build": "npm run validate:data && node --max-old-space-size=4096 ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview"
   },

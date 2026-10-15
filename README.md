@@ -23,8 +23,8 @@ The production build is written to `dist/`.
 - Globe mode rotates to center the latest guess, then can be manually rotated by dragging and zoomed with the same controls.
 - Guess dots become larger and warmer in color as their proximity score improves.
 - The solved target is revealed with a green marker and halo.
-- Scores are 0-100, using great-circle distance against the hidden target and a tuned curve that gives better contrast between nearby and far-away guesses. Exact matches score 100.
-- Oceania targets use a gentler distance curve so island-region guesses feel appropriately warm despite the larger gaps between neighbouring capitals.
+- Scores are 0-100, using great-circle distance and the spacing of playable capitals around the hidden target. Widely spaced capitals receive a gentler curve; closer guesses always score at least as highly for the same target. Only exact matches score 100.
+- Existing Oceania scoring is preserved. Dense areas such as central Europe and the eastern Caribbean retain their standard curve; isolated targets such as Cape Town receive warmer scores.
 - There are no arrows, bearings, or connecting lines; only proximity, map position, and the ordered guess list are shown.
 - The hidden target is revealed only after it is guessed.
 - Players can give up and reveal the target; reveals do not count as wins or streak days.
@@ -33,6 +33,24 @@ The production build is written to `dist/`.
 - After solving, a fact panel shows city/location details, current weather from Open-Meteo, exploration links, and local player stats.
 
 ## Launch Notes
+
+### Scoring and verification
+
+Scoring lives in `src/scoring.js`. For each target, the distance to its third-nearest alternative capital (the median of its five nearest alternatives) determines a cached decay value:
+
+```text
+existingDecay = 6500 for existing Oceania targets, otherwise 3500
+decay = max(existingDecay, min(6500, 5 * thirdNearestDistanceKm))
+score = round(100 * exp(-distanceKm / decay) * max(0, 1 - distanceKm / 20015))
+```
+
+Incorrect guesses are capped at 99. The cap on decay limits generosity for very isolated targets; it does not guarantee a very high score for every target's closest neighbour. Scores depend on the target's surroundings, so reversing a guess/target pair can produce a different score.
+
+Existing saved guesses are stored by capital ID and are rescored when restored. Guess counts, completed games, streaks, target selection, and the daily schedule are unchanged; displayed scores and share colours for saved guesses can change after updating.
+
+Run `npm test` for scoring regressions, including all 39,402 non-exact capital pairs. Run `npm run build` for dataset validation and the production build.
+
+### Site and analytics
 
 - SEO/social metadata is included in `index.html`.
 - The first-time hint is stored locally after dismissal.

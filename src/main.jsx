@@ -1,16 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { geoDistance, geoGraticule, geoNaturalEarth1, geoOrthographic, geoPath } from "d3-geo";
-import capitalsData from "./data/capitals.json";
+import capitalsData from "./data/capitals.json" with { type: "json" };
 import worldData from "./data/world.json";
+import { scoreGuess } from "./scoring.js";
 import "./styles.css";
 
 const CAPITALS = capitalsData.capitals;
 const GAME_START = "2024-01-01";
 const STORAGE_KEY = "loughlane-capital-daily-v1";
-const MAX_DISTANCE_KM = 20015;
-const SCORE_DECAY_KM = 3500;
-const OCEANIA_SCORE_DECAY_KM = 6500;
 const TARGET_COLOR = "#1f9f65";
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 6;
@@ -20,21 +18,6 @@ const CAPITAL_ALIASES = {
   "k-benhavn-denmark": ["København", "Kobenhavn"],
   "nur-sultan-kazakhstan": ["Nur-Sultan", "Nursultan"]
 };
-const OCEANIA_COUNTRIES = new Set([
-  "Australia",
-  "Fiji",
-  "Kiribati",
-  "Marshall Islands",
-  "Federated States of Micronesia",
-  "New Zealand",
-  "Palau",
-  "Papua New Guinea",
-  "Samoa",
-  "Solomon Islands",
-  "Tonga",
-  "Tuvalu",
-  "Vanuatu"
-]);
 
 function utcDateString(date = new Date()) {
   return date.toISOString().slice(0, 10);
@@ -119,36 +102,6 @@ function capitalMatchesInput(capital, inputValue) {
     query === cityCountry ||
     searchTermsForCapital(capital).some((term) => normalizeSearchValue(term) === query)
   );
-}
-
-function toRadians(value) {
-  return (value * Math.PI) / 180;
-}
-
-function distanceKm(a, b) {
-  const earthRadiusKm = 6371;
-  const deltaLat = toRadians(b.lat - a.lat);
-  const deltaLon = toRadians(b.lon - a.lon);
-  const lat1 = toRadians(a.lat);
-  const lat2 = toRadians(b.lat);
-  const haversine =
-    Math.sin(deltaLat / 2) ** 2 +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) ** 2;
-  return 2 * earthRadiusKm * Math.asin(Math.sqrt(haversine));
-}
-
-function scoreGuess(guess, target) {
-  if (guess.id === target.id) {
-    return { distance: 0, score: 100 };
-  }
-  const distance = distanceKm(guess, target);
-  const closeness = Math.max(0, 1 - distance / MAX_DISTANCE_KM);
-  const decay = OCEANIA_COUNTRIES.has(target.country) ? OCEANIA_SCORE_DECAY_KM : SCORE_DECAY_KM;
-  const score = Math.max(0, Math.round(100 * Math.exp(-distance / decay) * closeness));
-  return {
-    distance,
-    score: Math.min(99, score)
-  };
 }
 
 function proximityLabel(score) {
@@ -858,7 +811,8 @@ function InfoPanel() {
         <h2>Guess the capital, then follow the score.</h2>
         <p>
           Scores run from 0 to 100. Warmer colours and larger dots mean your guess is closer to
-          the Daily Capital. There are no arrows or connecting lines, and the answer stays hidden
+          the Daily Capital. Scores account for the spacing of capitals around the answer.
+          There are no arrows or connecting lines, and the answer stays hidden
           until you solve it or reveal it.
         </p>
       </article>
