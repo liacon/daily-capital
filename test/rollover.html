@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><title>Daily Capital rollover test</title></head>
+  <body>
+    <aside aria-label="Test controls">
+      <p>Local test harness: simulated date and isolated in-memory storage. Not included in production builds.</p>
+      <button id="advance">Advance one day and resume</button>
+      <button id="silent">Advance one day without resume</button>
+      <output id="test-date"></output>
+      <details><summary>Test saved state</summary><pre id="saved-state"></pre></details>
+    </aside>
+    <div id="root"></div>
+    <script>
+      const NativeDate = Date;
+      let time = NativeDate.parse("2026-10-15T12:00:00Z");
+      window.Date = class extends NativeDate {
+        constructor(...args) { super(...(args.length ? args : [time])); }
+        static now() { return time; }
+      };
+      const data = new Map();
+      Object.defineProperty(window, "localStorage", { value: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => {
+          data.set(key, String(value));
+          document.getElementById("saved-state").textContent = String(value);
+        }
+      } });
+      function advance(resume) {
+        time += 86400000;
+        document.getElementById("test-date").textContent = new Date().toISOString();
+        if (resume) window.dispatchEvent(new Event("focus"));
+      }
+      document.getElementById("advance").onclick = () => advance(true);
+      document.getElementById("silent").onclick = () => advance(false);
+      document.getElementById("test-date").textContent = new Date().toISOString();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

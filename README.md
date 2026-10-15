@@ -15,6 +15,7 @@ The production build is written to `dist/`.
 ## Game Mechanics
 
 - Each UTC date maps deterministically to one hidden capital city.
+- Open games switch to the new puzzle at UTC midnight, or when the tab resumes after sleeping. Previous guesses and completed results remain saved under their original date.
 - Daily targets are drawn from a deterministic shuffled deck, so all 199 capitals appear once before any repeats.
 - The daily puzzle number starts at `#1` on 2024-01-01.
 - Players search for a capital, make guesses, and see each guess as a dot on a flat world map. Suggestions match capital names and accepted aliases, not country names.
@@ -48,7 +49,13 @@ Incorrect guesses are capped at 99. The cap on decay limits generosity for very 
 
 Existing saved guesses are stored by capital ID and are rescored when restored. Guess counts, completed games, streaks, target selection, and the daily schedule are unchanged; displayed scores and share colours for saved guesses can change after updating.
 
-Run `npm test` for scoring regressions, including all 39,402 non-exact capital pairs. Run `npm run build` for dataset validation and the production build.
+Run `npm test` for scoring, UTC rollover, saved-state restoration, and streak regressions, including all 39,402 non-exact capital pairs. Run `npm run build` for dataset validation and the production build.
+
+For a manual rollover check, start the development server and open `/test/rollover.html`. This fixture loads the actual game with an adjustable date and isolated in-memory storage. Check unfinished, solved, and revealed games across a day change, including the silent advance followed by a guess. It does not change your normal saved games and is not included in the production build.
+
+### Deployment
+
+The live site at https://daily-capital.com uses Cloudflare Workers static assets. The connected Git repository is `liacon/daily-capital`, with automatic production builds enabled for `main`. Dashboard settings verified on 2026-10-15: root directory `/`, build command `npm run build`, deploy command `npx wrangler deploy`, and `VITE_GA_MEASUREMENT_ID` configured as a build variable. No Wrangler configuration is checked into this repository; these settings are managed in Cloudflare.
 
 ### Site and analytics
 
