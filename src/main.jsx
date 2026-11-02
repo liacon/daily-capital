@@ -663,7 +663,7 @@ function WeatherSummary({ city }) {
   );
 }
 
-function SolvePanel({ target, guesses, history, streak, demoTarget, revealed }) {
+function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, onShare, copied }) {
   const exploreLinks = buildExploreLinks(target);
   const stats = computePlayerStats(history);
   const closestBeforeSolve = guesses
@@ -683,6 +683,12 @@ function SolvePanel({ target, guesses, history, streak, demoTarget, revealed }) 
           {revealed ? `Revealed after ${guesses.length}` : `Solved in ${guesses.length}`}
         </span>
       </div>
+
+      {!demoTarget && (
+        <button className="share-button" onClick={onShare} type="button">
+          {copied ? "Copied" : "Share result"}
+        </button>
+      )}
 
       <WeatherSummary city={target} />
 
@@ -1135,20 +1141,16 @@ function DailyGame({ today, onDateChange }) {
           {solved && (
             <div ref={solvePanelRef}>
               <SolvePanel
+                copied={copied}
                 demoTarget={demoTarget}
                 guesses={guesses}
                 history={store.history}
+                onShare={shareResult}
                 revealed={revealed}
                 streak={streak}
                 target={target}
               />
             </div>
-          )}
-
-          {solved && !demoTarget && (
-            <button className="share-button" onClick={shareResult} type="button">
-              {copied ? "Copied" : "Share result"}
-            </button>
           )}
 
           <section className="history-panel" aria-label="Local history">

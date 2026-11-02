@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-10-15
+Last updated: 2026-11-02
 
 ## Purpose and maintenance
 
@@ -13,9 +13,8 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
 - Current branch: `main`
-- Latest application commit: `60670fd77a9deb2852e464c342a198d059adde84` — Adjust proximity scoring for local capital spacing (2026-10-15). The user committed and pushed this change; local `main`, recorded `origin/main`, and the remote branch were verified at this commit.
-- Current uncommitted work: UTC rollover fix, saved-state/clock regression tests, development-only browser test fixture, README updates, and this status document. No maintenance commit, push, or deployment has been made.
-- `PROJECT_STATUS.md` is still untracked and should be included in the next commit. The scoring commit did not include it.
+- Latest application commit: `5313e7566e9266ed910e795810d390c0bd0a0987` — Fix daily puzzle rollover and add regression tests (2026-10-15). Local HEAD and GitHub `main` match; Cloudflare successfully deployed this commit.
+- The user committed and pushed the maintenance changes, including this status document. Current uncommitted work: the 2026-11-02 Share button relocation in `src/main.jsx` and this status record. The Share change has not been deployed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
@@ -23,7 +22,7 @@ Keep this document current when development changes functionality, decisions, ou
 - One deterministic mystery capital per UTC date, using shuffled cycles of 199 capitals. Puzzle numbering starts on 2024-01-01.
 - Capital-name/alias autocomplete ranked by match quality. Country names do not drive suggestions. Non-capital input is rejected and duplicate guesses are handled.
 - Great-circle proximity scoring from 0 to 100, adjusted for the spacing of capitals around each target. Existing Oceania scores are preserved. Live in commit `60670fd`.
-- Automatic UTC midnight rollover and resume checks reset the current board while preserving previous dates' history. Guess, reveal, and share actions check the date before proceeding. Implemented and verified locally; awaiting release.
+- Automatic UTC midnight rollover and resume checks reset the current board while preserving previous dates' history. Guess, reveal, and share actions check the date before proceeding. Live in commit `5313e75`.
 - Interactive flat and globe maps, zoom/drag controls, and guess markers whose colour and size reflect proximity.
 - Solve and give-up/reveal flows; reveals do not count as wins or streak days.
 - Browser-local saved progress, completed states, streaks, recent history, and player statistics.
@@ -69,7 +68,7 @@ Dependencies and generated build output already exist locally. Node observed dur
 - `VITE_GA_MEASUREMENT_ID` is configured in the production build settings and present in the live bundle; `.env.example` contains a placeholder. Analytics event delivery was not independently checked in GA4.
 - No checked-in Cloudflare deployment configuration was found; deployment settings are managed in the dashboard. No dashboard settings were changed.
 - Scoring commit `60670fd` has a successful Workers Builds check and Cloudflare build `4d3b0273-d2cd-4e85-8bd0-1c6cd468353d`. The live site returned HTTP 200 and its JavaScript includes the spacing-based scoring explanation. Cloudflare build logs report Node 24.18.0 and npm 10.9.2.
-- Local `dist/` was rebuilt successfully after the maintenance changes on 2026-10-15. This does not deploy the rollover fix.
+- Maintenance commit `5313e75` deployed successfully at 2026-10-15 16:26:04 UTC (17:26 BST), Cloudflare build `eefedfff-22f6-4095-af28-675814dbaef3`. Live HTML serves `/assets/index-0dO2cZoB.js`, which contains the UTC midnight watcher, resume listeners, and saved-state restoration code. The live page loads with the current puzzle and scoring explanation.
 
 ## Decisions to preserve
 
@@ -99,7 +98,7 @@ Dependencies and generated build output already exist locally. Node observed dur
 | 2026-10-07 | `52f1b64` | Persistence of completed daily puzzle state |
 | 2026-10-15 | Uncommitted documentation | Recovered project context, inspected repository, and established this status record |
 | 2026-10-15 | `60670fd` | Bounded spacing-based scoring, 3 regression tests, and explanatory documentation; user pushed and production verified |
-| 2026-10-15 | Uncommitted maintenance | UTC rollover fix, 10 additional regression tests, browser fixture, and documentation; all 13 tests, browser checks, data validation, and production build passed |
+| 2026-10-15 | `5313e75` | UTC rollover fix, 10 additional regression tests, browser fixture, and documentation; all 13 tests, browser checks, data validation, and production build passed; user pushed and production verified |
 | 2026-10-15 | Local maintenance | Repaired damaged remote default-branch reference; Git integrity checks passed. User recovered disk space and restarted; 6.06 GB free verified. Cloudflare deployment settings verified. |
 
 The previous task, “Build capital-city guessing game MVP”, became unusable following conversation compaction errors. Its recent readable history was recovered for context. The latest recovered feature requests are implemented; no formal product backlog was found. The items below are inspection findings, not previously agreed feature commitments.
@@ -108,7 +107,7 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Commit/push the verified rollover maintenance when authorized | Local implementation complete; 13 tests, browser gameplay checks, dataset validation, production build, and Git checks passed. Include this currently untracked status document. Verify the live release after push. |
+| Release | Publish the more prominent Share button when authorized | Implemented 2026-11-02: full-width orange Share directly below the result heading/badge, before weather and city facts. Mobile/desktop browser checks and production build passed; not committed or deployed. |
 | Medium | Extend regression checks when related features change | Scoring, date rollover, saved-state restoration, and streaks are automated. Search, reveal, and win flows have manual browser coverage; broader automated browser coverage remains optional future work. |
 | Low | Reassess bundle size if loading performance warrants it | Successful build retains a non-blocking warning for the approximately 556 kB JavaScript bundle. No splitting introduced. |
 | Product | Clarify multi-capital countries in player-facing explanations | All three South African capitals are already included. Recommendation: retain them as separate possible targets and explain their roles after solving. This explanation is proposed, not implemented. |
@@ -243,12 +242,14 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. Commit/push the verified maintenance changes when authorized, including the new modules, tests, browser fixture, README, and this status record; then verify Cloudflare's successful deployment and the live version.
+1. Commit/push the Share button relocation and this status record when authorized, then verify the live release. The earlier rollover maintenance is already deployed.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.
 
 ## Maintenance completion — 2026-10-15
+
+Historical pre-release record. The user subsequently committed/pushed the maintenance as `5313e75`; release verification follows below.
 
 - Repaired `.git/refs/remotes/origin/HEAD` from 30 null bytes to a symbolic reference to `refs/remotes/origin/main`. Preserved the original at `C:\Users\lcaug\Documents\Codex\2026-10-15\i-m-continuing-development-of-daily\work\daily-capital-origin-HEAD.before-repair.bin`. No branch reset or source changes were involved in this repair. `git symbolic-ref`, `git log --all`, and `git fsck --full --no-dangling` passed.
 - Implemented a UTC date watcher and a date-keyed daily-game component so guesses, selected capital, solved/revealed state, and other transient board state cannot carry into a new day's puzzle. Previous history stays saved under its original date. Action-time guards handle a stale tab before its timer/resume event runs.
@@ -257,3 +258,11 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 - After the user's restart, re-ran all 13 automated tests, dataset validation (199 capitals/177 map features), the production build, Git integrity, and whitespace checks successfully. Build has only the existing non-blocking bundle-size warning.
 - Local tools recovered after restart; free C: space measured 6.06 GB. The exact cause of the earlier tool failures was not established. No files were deleted by the assistant.
 - Verified Cloudflare's production settings read-only, the successful scoring release, and configured analytics build variable. The maintenance source and documentation remain uncommitted and are not live. No dependencies installed or dashboard settings changed.
+
+## Maintenance release verification — 2026-10-15
+
+- Local HEAD and GitHub's latest `main` both resolve to `5313e7566e9266ed910e795810d390c0bd0a0987` (Fix daily puzzle rollover and add regression tests).
+- GitHub's `Workers Builds: daily-capital` check for that exact commit completed successfully at 16:26:04 UTC. Build: https://dash.cloudflare.com/88aad0a51c1c1eff8c24986574732dc0/workers/services/view/daily-capital/production/builds/eefedfff-22f6-4095-af28-675814dbaef3
+- Live HTML and its new JavaScript asset returned HTTP 200 from Cloudflare. The served bundle contains the midnight scheduler, focus/pageshow/visibilitychange listeners, saved-state restoration, and spacing-based scoring explanation.
+- Opened https://daily-capital.com in the browser: the game loaded with puzzle #1019 for 2026-10-15, map, guess input, and updated How to Play. No guesses or saved-game changes were made during this release inspection. Midnight behavior was tested locally earlier; an actual live midnight transition was not observed during this check.
+- Only this status record was updated; no application source, deployment settings, commits, or pushes were changed by the assistant.
