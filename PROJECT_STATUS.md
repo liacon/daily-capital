@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-02
+Last updated: 2026-11-03
 
 ## Purpose and maintenance
 
@@ -13,11 +13,13 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
 - Current branch: `main`
-- Latest application commit: `5313e7566e9266ed910e795810d390c0bd0a0987` — Fix daily puzzle rollover and add regression tests (2026-10-15). Local HEAD and GitHub `main` match; Cloudflare successfully deployed this commit.
-- The user committed and pushed the maintenance changes, including this status document. Current uncommitted work: the 2026-11-02 Share button relocation in `src/main.jsx` and this status record. The Share change has not been deployed.
+- Latest local application commit: `354ced0` — Move share button to top of results card (2026-11-02). User reports the push/deployment is running; production verification of this revision remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: completion-analytics fix in `src/main.jsx`, a development-only analytics regression fixture, README verification instructions, and this status record. Existing documentation changes have been preserved.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
+
+- Completion analytics fix is ready locally: new winning guesses and reveals emit their corresponding event; restoring a saved result does not. Browser checks on 2026-11-02 covered unfinished-game reload, a two-guess solve and reload, next-day reveal and reload, and preview suppression. All 13 existing tests, data validation, and production build passed. On 2026-11-03, confirmed the saved changes remained intact after interruption and `git diff --check` passed. No commit or push performed. Historical duplicate Analytics events are unchanged.
 
 - One deterministic mystery capital per UTC date, using shuffled cycles of 199 capitals. Puzzle numbering starts on 2024-01-01.
 - Capital-name/alias autocomplete ranked by match quality. Country names do not drive suggestions. Non-capital input is rejected and duplicate guesses are handled.
@@ -107,7 +109,9 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Publish the more prominent Share button when authorized | Implemented 2026-11-02: full-width orange Share directly below the result heading/badge, before weather and city facts. Mobile/desktop browser checks and production build passed; not committed or deployed. |
+| Release | Verify the Share button release | Committed as `354ced0`; user reports push/deployment underway. Mobile/desktop browser checks and production build passed locally. Production verification pending. |
+| Release | Publish completion-analytics fix | Implemented locally on 2026-11-02: emit `puzzle_solved` only on the winning guess and `puzzle_revealed` only on the reveal action. Restoring saved games emits neither. All 13 existing tests, data validation, production build, and isolated browser regression checks passed. Not committed or deployed. |
+| Analytics | Clarify Share and traffic reporting before monetisation | `share_result` records button activation, including the clipboard fallback; it does not establish that a result was posted elsewhere. Review hostnames, internal/test traffic, key-event configuration, and returning-player cohorts. These checks are proposed, not completed. |
 | Medium | Extend regression checks when related features change | Scoring, date rollover, saved-state restoration, and streaks are automated. Search, reveal, and win flows have manual browser coverage; broader automated browser coverage remains optional future work. |
 | Low | Reassess bundle size if loading performance warrants it | Successful build retains a non-blocking warning for the approximately 556 kB JavaScript bundle. No splitting introduced. |
 | Product | Clarify multi-capital countries in player-facing explanations | All three South African capitals are already included. Recommendation: retain them as separate possible targets and explain their roles after solving. This explanation is proposed, not implemented. |
@@ -242,7 +246,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. Commit/push the Share button relocation and this status record when authorized, then verify the live release. The earlier rollover maintenance is already deployed.
+1. Commit/push the verified completion-analytics fix with README, `test/analytics.html`, and this status record when authorized, then verify the deployed revision. The Share release also awaits independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.

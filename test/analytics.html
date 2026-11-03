@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Daily Capital analytics test</title>
+  </head>
+  <body>
+    <aside aria-label="Analytics test controls">
+      <p>Local fixture: captured analytics and isolated session storage. Reload preserves this test's game and events. No analytics are sent to Google.</p>
+      <button id="reset">Reset test game and events</button>
+      <button id="advance">Advance one day and resume</button>
+      <output id="test-date"></output>
+      <h2>Recorded test events</h2>
+      <p id="completion-counts" aria-live="polite"></p>
+      <pre id="events" aria-label="Recorded test events"></pre>
+    </aside>
+    <div id="root"></div>
+    <script>
+      const prefix = "daily-capital-analytics-test:";
+      const NativeDate = Date;
+      let time = Number(sessionStorage.getItem(prefix + "time") || NativeDate.parse("2026-10-15T12:00:00Z"));
+      window.Date = class extends NativeDate {
+        constructor(...args) { super(...(args.length ? args : [time])); }
+        static now() { return time; }
+      };
+      Object.defineProperty(window, "localStorage", { value: {
+        getItem: (key) => sessionStorage.getItem(prefix + "game:" + key),
+        setItem: (key, value) => sessionStorage.setItem(prefix + "game:" + key, String(value))
+      } });
+      const events = JSON.parse(sessionStorage.getItem(prefix + "events") || "[]");
+      function showEvents() {
+        document.getElementById("events").textContent = JSON.stringify(events, null, 2);
+        const solves = events.filter((event) => event.name === "puzzle_solved").length;
+        const reveals = events.filter((event) => event.name === "puzzle_revealed").length;
+        document.getElementById("completion-counts").textContent = `Completion events: ${solves} solved, ${reveals} revealed`;
+      }
+      window.__dailyCapitalGaInstalled = true;
+      window.gtag = (command, name, props) => {
+        if (command !== "event") return;
+        events.push({ name, ...props });
+        sessionStorage.setItem(prefix + "events", JSON.stringify(events));
+        showEvents();
+      };
+      document.getElementById("reset").onclick = () => {
+        for (const key of Object.keys(sessionStorage)) {
+          if (key.startsWith(prefix)) sessionStorage.removeItem(key);
+        }
+        location.reload();
+      };
+      document.getElementById("advance").onclick = () => {
+        time += 86400000;
+        sessionStorage.setItem(prefix + "time", String(time));
+        document.getElementById("test-date").textContent = new Date().toISOString();
+        window.dispatchEvent(new Event("focus"));
+      };
+      document.getElementById("test-date").textContent = new Date().toISOString();
+      showEvents();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

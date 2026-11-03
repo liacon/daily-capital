@@ -898,10 +898,6 @@ function DailyGame({ today, onDateChange }) {
       saveStore(next);
       return next;
     });
-    trackEvent("puzzle_solved", {
-      guesses: guesses.length,
-      puzzleNumber
-    });
   }, [demoTarget, guesses.length, puzzleNumber, today, won]);
 
   useEffect(() => {
@@ -923,10 +919,6 @@ function DailyGame({ today, onDateChange }) {
       };
       saveStore(next);
       return next;
-    });
-    trackEvent("puzzle_revealed", {
-      guesses: guesses.length,
-      puzzleNumber
     });
   }, [demoTarget, guesses.length, puzzleNumber, revealed, today]);
 
@@ -957,7 +949,7 @@ function DailyGame({ today, onDateChange }) {
   }
 
   function submitGuess(capital) {
-    if (!ensureCurrentDay()) return;
+    if (!ensureCurrentDay() || solved) return;
     const selected =
       capital ||
       CAPITALS.find((item) => capitalMatchesInput(item, input));
@@ -982,13 +974,26 @@ function DailyGame({ today, onDateChange }) {
       score: scored.score,
       solved: scored.score === 100
     });
+    // Count the player's completion action, never restoration of a saved result.
+    if (scored.score === 100 && !demoTarget) {
+      trackEvent("puzzle_solved", {
+        guesses: guesses.length + 1,
+        puzzleNumber
+      });
+    }
   }
 
   function revealTarget() {
-    if (!ensureCurrentDay()) return;
+    if (!ensureCurrentDay() || solved) return;
     setRevealed(true);
     setInput("");
     setMessage("Target revealed. This one will not count as a win.");
+    if (!demoTarget) {
+      trackEvent("puzzle_revealed", {
+        guesses: guesses.length,
+        puzzleNumber
+      });
+    }
   }
 
   async function shareResult() {

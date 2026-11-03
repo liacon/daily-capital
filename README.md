@@ -53,6 +53,12 @@ Run `npm test` for scoring, UTC rollover, saved-state restoration, and streak re
 
 For a manual rollover check, start the development server and open `/test/rollover.html`. This fixture loads the actual game with an adjustable date and isolated in-memory storage. Check unfinished, solved, and revealed games across a day change, including the silent advance followed by a guess. It does not change your normal saved games and is not included in the production build.
 
+### Completion analytics verification
+
+Completion events are emitted by the winning guess or reveal action, not by restoring saved results. Preview games do not emit completion events. Historical duplicate events already recorded in Analytics are not corrected by this change.
+
+For a browser regression check, start the development server and open `/test/analytics.html`. The fixture captures events without sending them to Google, uses an adjustable UTC date, and keeps its own game/events in session storage across reloads. Submit Pretoria then Cape Town: expect one `puzzle_solved` with `guesses: 2`. Reload: the result should restore with no additional solve event. Advance one day, reveal, then reload: expect one `puzzle_revealed` with `guesses: 0` and no duplicate on reload. Open the fixture with `?target=cape-town-south-africa` and solve: completion counts should stay unchanged. The reset button clears only this fixture's data. This fixture is not included in the production build.
+
 ### Deployment
 
 The live site at https://daily-capital.com uses Cloudflare Workers static assets. The connected Git repository is `liacon/daily-capital`, with automatic production builds enabled for `main`. Dashboard settings verified on 2026-10-15: root directory `/`, build command `npm run build`, deploy command `npx wrangler deploy`, and `VITE_GA_MEASUREMENT_ID` configured as a build variable. No Wrangler configuration is checked into this repository; these settings are managed in Cloudflare.
