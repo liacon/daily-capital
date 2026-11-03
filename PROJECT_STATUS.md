@@ -13,13 +13,14 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
 - Current branch: `main`
-- Latest local application commit: `354ced0` — Move share button to top of results card (2026-11-02). User reports the push/deployment is running; production verification of this revision remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: completion-analytics fix in `src/main.jsx`, a development-only analytics regression fixture, README verification instructions, and this status record. Existing documentation changes have been preserved.
+- Latest local application commit: `f0bfa4e` — Fix dupe completion analytics on saved game reload. User reports push/deployment underway; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: approved globe favicon (`public/favicon-globe.png`), its reference in `index.html`, and this status record. Working tree was clean before the favicon change.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
 
-- Completion analytics fix is ready locally: new winning guesses and reveals emit their corresponding event; restoring a saved result does not. Browser checks on 2026-11-02 covered unfinished-game reload, a two-guess solve and reload, next-day reveal and reload, and preview suppression. All 13 existing tests, data validation, and production build passed. On 2026-11-03, confirmed the saved changes remained intact after interruption and `git diff --check` passed. No commit or push performed. Historical duplicate Analytics events are unchanged.
+- Completion analytics fix is committed in `f0bfa4e`: new winning guesses and reveals emit their corresponding event; restoring a saved result does not. Browser checks on 2026-11-02 covered unfinished-game reload, a two-guess solve and reload, next-day reveal and reload, and preview suppression. All 13 existing tests, data validation, and production build passed. Historical duplicate Analytics events are unchanged.
+- Approved globe favicon added locally on 2026-11-03: Africa/Europe hemisphere, teal palette, and a single green dot. Replaces the old curved-line symbol. Exported as a 64px PNG from the approved vector artwork; publisher branding remains Loughlane Digital.
 
 - One deterministic mystery capital per UTC date, using shuffled cycles of 199 capitals. Puzzle numbering starts on 2024-01-01.
 - Capital-name/alias autocomplete ranked by match quality. Country names do not drive suggestions. Non-capital input is rejected and duplicate guesses are handled.
@@ -110,7 +111,8 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
 | Release | Verify the Share button release | Committed as `354ced0`; user reports push/deployment underway. Mobile/desktop browser checks and production build passed locally. Production verification pending. |
-| Release | Publish completion-analytics fix | Implemented locally on 2026-11-02: emit `puzzle_solved` only on the winning guess and `puzzle_revealed` only on the reveal action. Restoring saved games emits neither. All 13 existing tests, data validation, production build, and isolated browser regression checks passed. Not committed or deployed. |
+| Release | Verify completion-analytics release | Committed as `f0bfa4e`; user reports push/deployment underway. Local automated tests, build, and browser checks passed. Independent production verification pending. |
+| Release | Publish approved globe favicon | Added `public/favicon-globe.png` and updated the HTML icon link. Data validation and production build passed; verified built HTML references the icon and the built PNG exactly matches the source. Existing bundle-size warning only. Not committed or deployed. |
 | Analytics | Clarify Share and traffic reporting before monetisation | `share_result` records button activation, including the clipboard fallback; it does not establish that a result was posted elsewhere. Review hostnames, internal/test traffic, key-event configuration, and returning-player cohorts. These checks are proposed, not completed. |
 | Medium | Extend regression checks when related features change | Scoring, date rollover, saved-state restoration, and streaks are automated. Search, reveal, and win flows have manual browser coverage; broader automated browser coverage remains optional future work. |
 | Low | Reassess bundle size if loading performance warrants it | Successful build retains a non-blocking warning for the approximately 556 kB JavaScript bundle. No splitting introduced. |
@@ -246,7 +248,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. Commit/push the verified completion-analytics fix with README, `test/analytics.html`, and this status record when authorized, then verify the deployed revision. The Share release also awaits independent production verification in this task.
+1. Commit/push the globe favicon, HTML link, and this status record when authorized, then verify the live favicon and deployed revision. Share and completion-analytics releases await independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.
