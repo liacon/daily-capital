@@ -606,32 +606,25 @@ button:disabled {
   font-weight: 700;
 }
 
-.fact-grid,
-.stats-grid {
+.fact-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 
-.fact-grid > div,
-.stats-grid > div {
+.fact-grid > div {
   border: 1px solid #d8e2de;
   border-radius: 8px;
   padding: 10px;
   background: #f8faf6;
 }
 
-.fact-grid strong,
-.stats-grid strong {
+.fact-grid strong {
   display: block;
   margin-top: 2px;
   color: #1e2528;
   font-size: 1rem;
   overflow-wrap: anywhere;
-}
-
-.stats-grid strong {
-  font-size: 1.25rem;
 }
 
 .explore-links {
@@ -660,8 +653,47 @@ button:disabled {
   gap: 8px;
 }
 
-.stats-panel h2 {
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0;
+  border: 1px solid #d8e2de;
+  border-radius: 8px;
+  padding: 10px 0;
+  background: #f2f8f6;
+}
+
+.stats-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  min-width: 0;
+  padding: 0 5px;
+  text-align: center;
+}
+
+.stats-grid > div + div {
+  border-left: 1px solid #d8e2de;
+}
+
+.stats-grid dt {
+  color: #4b5b5f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.stats-grid dd {
+  order: -1;
+  margin: 0;
+  color: #1f5f55;
+  font-size: 1.2rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .empty-state {
@@ -845,7 +877,6 @@ button:disabled {
 
   .weather-card,
   .fact-grid,
-  .stats-grid,
   .explore-links {
     grid-template-columns: 1fr;
   }

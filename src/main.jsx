@@ -684,6 +684,31 @@ function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, on
         </span>
       </div>
 
+      <div className="stats-panel" aria-label="Your stats">
+        <dl className="stats-grid">
+          <div>
+            <dt>Current streak</dt>
+            <dd>{demoTarget ? "Paused" : streak}</dd>
+          </div>
+          <div>
+            <dt>Total plays</dt>
+            <dd>{stats.totalPlays}</dd>
+          </div>
+          <div>
+            <dt>Best solve</dt>
+            <dd>{stats.bestGuesses ?? "—"}</dd>
+          </div>
+          <div>
+            <dt>Avg guesses</dt>
+            <dd>{stats.averageGuesses ?? "—"}</dd>
+          </div>
+        </dl>
+        {demoTarget && <p className="stats-note">Preview solves are not added to your stats.</p>}
+        {!demoTarget && stats.bestGuesses === null && (
+          <p className="stats-note">Solve a capital to start your best and average guess stats.</p>
+        )}
+      </div>
+
       {!demoTarget && (
         <button className="share-button" onClick={onShare} type="button">
           {copied ? "Copied" : "Share result"}
@@ -723,29 +748,6 @@ function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, on
             {link.label}
           </a>
         ))}
-      </div>
-
-      <div className="stats-panel">
-        <h2>Your stats</h2>
-        <div className="stats-grid">
-          <div>
-            <span className="fact-label">Current streak</span>
-            <strong>{demoTarget ? "Paused" : streak}</strong>
-          </div>
-          <div>
-            <span className="fact-label">Total plays</span>
-            <strong>{stats.totalPlays}</strong>
-          </div>
-          <div>
-            <span className="fact-label">Best solve</span>
-            <strong>{stats.bestGuesses ?? "Not yet"}</strong>
-          </div>
-          <div>
-            <span className="fact-label">Average</span>
-            <strong>{stats.averageGuesses ?? "Not yet"}</strong>
-          </div>
-        </div>
-        {demoTarget && <p className="stats-note">Preview solves are not added to your stats.</p>}
       </div>
     </section>
   );

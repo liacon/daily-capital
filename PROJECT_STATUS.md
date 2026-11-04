@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-03
+Last updated: 2026-11-04
 
 ## Purpose and maintenance
 
@@ -13,11 +13,14 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
 - Current branch: `main`
-- Latest local application commit: `f0bfa4e` — Fix dupe completion analytics on saved game reload. User reports push/deployment underway; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: approved globe favicon (`public/favicon-globe.png`), its reference in `index.html`, and this status record. Working tree was clean before the favicon change.
+- Latest local application commit: `c721731` — Replace favicon. Earlier analytics fix is `f0bfa4e`; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: compact results stats in `src/main.jsx` and `src/styles.css`, plus this status record. Working tree was clean before this change. No commit, push or deployment performed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
+
+- Compact results layout developed locally on 2026-11-04 for user preview: capital/result, four-column stats strip (current streak, total plays, best solve, average guesses), Share, then existing weather, city facts and exploration links. Stats calculations, storage and analytics are unchanged. First-time reveals show dashes and an explanatory note for unavailable solve stats; preview mode retains paused streak and hidden Share.
+- Verification on 2026-11-04: all 13 existing tests, data validation (199 capitals/177 map features), and production build passed; existing approximately 556 kB bundle warning remains. Headless Chrome checked 320px/390px mobile and 1280px desktop layouts: stats remain one row (77px mobile, 63px desktop), no page overflow, and stats/Share/weather order is correct. Two-guess solve, spoiler-free clipboard share, saved-result reload, first-play reveal and preview-mode behavior passed with no page errors. Screenshots use isolated sample history and sample weather, not live player data or current weather. Preview files are in the continuation task's `outputs/results-stats-preview/` directory; browser-check script is outside the application repository. In-app browser automation was unavailable, so screenshots were captured using the installed Chrome browser.
 
 - Completion analytics fix is committed in `f0bfa4e`: new winning guesses and reveals emit their corresponding event; restoring a saved result does not. Browser checks on 2026-11-02 covered unfinished-game reload, a two-guess solve and reload, next-day reveal and reload, and preview suppression. All 13 existing tests, data validation, and production build passed. Historical duplicate Analytics events are unchanged.
 - Approved globe favicon added locally on 2026-11-03: Africa/Europe hemisphere, teal palette, and a single green dot. Replaces the old curved-line symbol. Exported as a 64px PNG from the approved vector artwork; publisher branding remains Loughlane Digital.
@@ -110,9 +113,9 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Verify the Share button release | Committed as `354ced0`; user reports push/deployment underway. Mobile/desktop browser checks and production build passed locally. Production verification pending. |
+| Release | Review compact results stats before committing | Local implementation ready for review. Original Share relocation `354ced0` is live according to the user's observation on 2026-11-04; they report players using it. No independent analytics check performed. |
 | Release | Verify completion-analytics release | Committed as `f0bfa4e`; user reports push/deployment underway. Local automated tests, build, and browser checks passed. Independent production verification pending. |
-| Release | Publish approved globe favicon | Added `public/favicon-globe.png` and updated the HTML icon link. Data validation and production build passed; verified built HTML references the icon and the built PNG exactly matches the source. Existing bundle-size warning only. Not committed or deployed. |
+| Release | Verify approved globe favicon deployment | Committed locally as `c721731`. Source PNG and HTML icon link previously passed build checks. Independent production verification pending. |
 | Analytics | Clarify Share and traffic reporting before monetisation | `share_result` records button activation, including the clipboard fallback; it does not establish that a result was posted elsewhere. Review hostnames, internal/test traffic, key-event configuration, and returning-player cohorts. These checks are proposed, not completed. |
 | Medium | Extend regression checks when related features change | Scoring, date rollover, saved-state restoration, and streaks are automated. Search, reveal, and win flows have manual browser coverage; broader automated browser coverage remains optional future work. |
 | Low | Reassess bundle size if loading performance warrants it | Successful build retains a non-blocking warning for the approximately 556 kB JavaScript bundle. No splitting introduced. |
@@ -248,7 +251,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. Commit/push the globe favicon, HTML link, and this status record when authorized, then verify the live favicon and deployed revision. Share and completion-analytics releases await independent production verification in this task.
+1. User to review the compact results screenshots before committing the layout change. Once approved, commit/push the two source files and this status record, then verify production. Favicon and completion-analytics releases also await independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.
