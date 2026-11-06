@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-04
+Last updated: 2026-11-06
 
 ## Purpose and maintenance
 
@@ -13,12 +13,14 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
 - Current branch: `main`
-- Latest local application commit: `c721731` — Replace favicon. Earlier analytics fix is `f0bfa4e`; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: compact results stats in `src/main.jsx` and `src/styles.css`, plus this status record. Working tree was clean before this change. No commit, push or deployment performed.
+- Latest local application commit: `0b9aa63` — Move compact player stats above share results card. Earlier favicon commit is `c721731` and analytics fix is `f0bfa4e`; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: correct red dots for scorching guesses in shared results (`src/main.jsx`), plus this status record. Working tree was clean before this change. No commit, push or deployment performed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
 
+- Share-colour fix developed locally on 2026-11-06: scores 85–99 now share as 🔴, matching the game's red scorching markers, instead of 🟢. Exact solves retain 🎯; all other bands, score calculations, saved progress, and share wording remain unchanged. Both solved and revealed shares use the corrected helper, including re-sharing a saved result after updating. Existing posts/clipboard contents are not rewritten.
+- Verification on 2026-11-06: checked all 101 integer scores against the share bands and the game's scorching colour. Against Port-of-Spain, Saint George's scores 95, Kingstown 91, and Castries 88; all now share red. Verified solved pattern 🔴🔴🔴🎯 and revealed pattern 🔴🔴🔴 using the actual share-builder functions, with no answer leaked. Data validation and production build passed; existing bundle-size warning only. No browser playtest was needed for the one-symbol text change.
 - Compact results layout developed locally on 2026-11-04 for user preview: capital/result, four-column stats strip (current streak, total plays, best solve, average guesses), Share, then existing weather, city facts and exploration links. Stats calculations, storage and analytics are unchanged. First-time reveals show dashes and an explanatory note for unavailable solve stats; preview mode retains paused streak and hidden Share.
 - Verification on 2026-11-04: all 13 existing tests, data validation (199 capitals/177 map features), and production build passed; existing approximately 556 kB bundle warning remains. Headless Chrome checked 320px/390px mobile and 1280px desktop layouts: stats remain one row (77px mobile, 63px desktop), no page overflow, and stats/Share/weather order is correct. Two-guess solve, spoiler-free clipboard share, saved-result reload, first-play reveal and preview-mode behavior passed with no page errors. Screenshots use isolated sample history and sample weather, not live player data or current weather. Preview files are in the continuation task's `outputs/results-stats-preview/` directory; browser-check script is outside the application repository. In-app browser automation was unavailable, so screenshots were captured using the installed Chrome browser.
 
@@ -113,7 +115,8 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Review compact results stats before committing | Local implementation ready for review. Original Share relocation `354ced0` is live according to the user's observation on 2026-11-04; they report players using it. No independent analytics check performed. |
+| Release | Publish share-colour correction | Local change ready: scorching scores 85–99 share red instead of green. Verification passed; not committed or deployed. |
+| Release | Verify compact results stats deployment | User approved the preview; committed as `0b9aa63`. Independent production verification pending. Original Share relocation `354ced0` is live according to the user's observation on 2026-11-04; they report players using it. No independent analytics check performed. |
 | Release | Verify completion-analytics release | Committed as `f0bfa4e`; user reports push/deployment underway. Local automated tests, build, and browser checks passed. Independent production verification pending. |
 | Release | Verify approved globe favicon deployment | Committed locally as `c721731`. Source PNG and HTML icon link previously passed build checks. Independent production verification pending. |
 | Analytics | Clarify Share and traffic reporting before monetisation | `share_result` records button activation, including the clipboard fallback; it does not establish that a result was posted elsewhere. Review hostnames, internal/test traffic, key-event configuration, and returning-player cohorts. These checks are proposed, not completed. |
@@ -251,7 +254,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. User to review the compact results screenshots before committing the layout change. Once approved, commit/push the two source files and this status record, then verify production. Favicon and completion-analytics releases also await independent production verification in this task.
+1. Commit/push the share-colour correction in `src/main.jsx` and this status record when authorized, then verify production. Compact stats, favicon and completion-analytics releases also await independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.

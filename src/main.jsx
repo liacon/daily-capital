@@ -173,7 +173,7 @@ function buildRevealShareText(puzzleNumber, guesses, bestBeforeSolve) {
 
 function shareSquare(score) {
   if (score === 100) return "🎯";
-  if (score >= 85) return "🟢";
+  if (score >= 85) return "🔴";
   if (score >= 65) return "🟠";
   if (score >= 42) return "🟡";
   if (score >= 20) return "🔵";
