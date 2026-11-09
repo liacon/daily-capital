@@ -288,8 +288,8 @@ function useElementSize() {
     if (!ref.current) return undefined;
     const observer = new ResizeObserver(([entry]) => {
       setSize({
-        width: Math.max(320, Math.round(entry.contentRect.width)),
-        height: Math.max(300, Math.round(entry.contentRect.height))
+        width: Math.max(1, Math.round(entry.contentRect.width)),
+        height: Math.max(1, Math.round(entry.contentRect.height))
       });
     });
     observer.observe(ref.current);
@@ -333,19 +333,15 @@ function MapView({ guesses, solved }) {
   }, [guesses, mode]);
 
   const { paths, dots, graticulePath, spherePath } = useMemo(() => {
+    // Keep the default view below the controls and inside the responsive panel.
+    const mapExtent = [[12, 68], [size.width - 12, size.height - 12]];
     const projection =
       mode === "globe"
         ? geoOrthographic()
             .rotate(globeView.rotate)
-            .fitExtent(
-              [
-                [18, 18],
-                [size.width - 18, size.height - 18]
-              ],
-              { type: "Sphere" }
-            )
+            .fitExtent(mapExtent, { type: "Sphere" })
             .clipAngle(90)
-        : geoNaturalEarth1().fitSize([size.width, size.height], worldData);
+        : geoNaturalEarth1().fitExtent(mapExtent, { type: "Sphere" });
 
     if (mode === "globe") {
       projection.scale(projection.scale() * globeView.k);
@@ -1020,9 +1016,16 @@ function DailyGame({ today, onDateChange }) {
   return (
     <main className="app-shell">
       <header className="site-header">
-        <div>
+        <div className="site-heading">
           <p className="eyebrow">Loughlane Digital</p>
           <h1>Daily Capital</h1>
+          <div className="game-intro">
+            <h2>Guess today’s capital city</h2>
+            <p>
+              A new capital city puzzle every day. Enter your first guess below, then use the clues
+              to find the answer.
+            </p>
+          </div>
         </div>
         <div className="puzzle-meta" aria-label="Puzzle details">
           <span>{demoTarget ? "Preview" : `#${puzzleNumber}`}</span>

@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-06
+Last updated: 2026-11-09
 
 ## Purpose and maintenance
 
@@ -13,12 +13,15 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
 - Current branch: `main`
-- Latest local application commit: `0b9aa63` — Move compact player stats above share results card. Earlier favicon commit is `c721731` and analytics fix is `f0bfa4e`; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: correct red dots for scorching guesses in shared results (`src/main.jsx`), plus this status record. Working tree was clean before this change. No commit, push or deployment performed.
+- Latest local application commit: `16d2874` — Match scoring share dots with red game markers. Earlier compact stats commit is `0b9aa63`, favicon commit is `c721731`, and analytics fix is `f0bfa4e`; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: introductory text beneath the title and compact responsive map sizing in `src/main.jsx` and `src/styles.css`, plus this status record. The introductory copy was already uncommitted when the map change began and has been preserved. No commit, push or deployment performed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
 
+- Compact map layout developed locally on 2026-11-09: flat map uses a responsive 1.65 aspect ratio with a 260px minimum; globe keeps a taller panel (340px minimum, 640px maximum). Map no longer stretches with the adjacent results column. The SVG fills the independently sized panel, its resize observer uses actual dimensions, and both projections fit the full sphere below the toolbar with small edge padding. Narrow-screen control spacing prevents overlap. At 1280px viewport the flat panel shrinks from 680px to about 481px and bottom blank space from 135px to 13px; at 390px it shrinks from 330px to 260px with bottom space reduced from 73px to 16px. Existing introductory copy is retained.
+- Map verification on 2026-11-09: headless Chrome passed flat/globe layout, zoom, drag and reset checks at 320px, 390px, 768px and 1280px, with no overlapping toolbars, horizontal page overflow or page errors. A submitted Lisbon guess rendered inside the panel; revealing the target did not increase the flat panel's height; switching to globe showed the revealed target. All 13 existing tests, data validation, final production build and whitespace checks passed. Existing bundle-size warning remains. Before/after screenshots and measurements are in the continuation task's `outputs/map-spacing-preview/`; browser-check script is outside the application repository.
+- Introductory copy added locally on 2026-11-09 beneath the Daily Capital title, before the map: “Guess today’s capital city” and “A new capital city puzzle every day. Enter your first guess below, then use the clues to find the answer.” Uses the user's wording, a small teal heading and restrained body text. Existing first-play hint remains available. Browser layout checks passed at 320px, 390px, 600px and 1280px: exact copy, title/intro/map order, no horizontal page overflow or page errors. Mobile and desktop screenshots saved in the continuation task's `outputs/intro-preview/`. Data validation and production build passed with the existing bundle-size warning.
 - Share-colour fix developed locally on 2026-11-06: scores 85–99 now share as 🔴, matching the game's red scorching markers, instead of 🟢. Exact solves retain 🎯; all other bands, score calculations, saved progress, and share wording remain unchanged. Both solved and revealed shares use the corrected helper, including re-sharing a saved result after updating. Existing posts/clipboard contents are not rewritten.
 - Verification on 2026-11-06: checked all 101 integer scores against the share bands and the game's scorching colour. Against Port-of-Spain, Saint George's scores 95, Kingstown 91, and Castries 88; all now share red. Verified solved pattern 🔴🔴🔴🎯 and revealed pattern 🔴🔴🔴 using the actual share-builder functions, with no answer leaked. Data validation and production build passed; existing bundle-size warning only. No browser playtest was needed for the one-symbol text change.
 - Compact results layout developed locally on 2026-11-04 for user preview: capital/result, four-column stats strip (current streak, total plays, best solve, average guesses), Share, then existing weather, city facts and exploration links. Stats calculations, storage and analytics are unchanged. First-time reveals show dashes and an explanatory note for unavailable solve stats; preview mode retains paused streak and hidden Share.
@@ -115,7 +118,8 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Publish share-colour correction | Local change ready: scorching scores 85–99 share red instead of green. Verification passed; not committed or deployed. |
+| Release | Publish introductory copy and compact map layout | User-requested explanation placed beneath the title and excess space removed from the default map panel. Local changes remain uncommitted and undeployed. |
+| Release | Verify share-colour correction deployment | Committed as `16d2874`: scorching scores 85–99 share red instead of green. Independent production verification pending. |
 | Release | Verify compact results stats deployment | User approved the preview; committed as `0b9aa63`. Independent production verification pending. Original Share relocation `354ced0` is live according to the user's observation on 2026-11-04; they report players using it. No independent analytics check performed. |
 | Release | Verify completion-analytics release | Committed as `f0bfa4e`; user reports push/deployment underway. Local automated tests, build, and browser checks passed. Independent production verification pending. |
 | Release | Verify approved globe favicon deployment | Committed locally as `c721731`. Source PNG and HTML icon link previously passed build checks. Independent production verification pending. |
@@ -254,7 +258,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. Commit/push the share-colour correction in `src/main.jsx` and this status record when authorized, then verify production. Compact stats, favicon and completion-analytics releases also await independent production verification in this task.
+1. Review the compact map preview, then commit/push the combined introductory copy and map layout in `src/main.jsx`, `src/styles.css`, and this status record when authorized. Verify production afterwards. Share-colour correction, compact stats, favicon and completion-analytics releases also await independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.
