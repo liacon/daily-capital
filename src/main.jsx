@@ -246,16 +246,16 @@ function buildExploreLinks(city) {
   const place = `${city.capital}, ${city.country}`;
   return [
     {
-      label: "Live cams",
-      href: `https://www.google.com/search?q=${encodeURIComponent(`${place} live webcam`)}`
+      label: "Map",
+      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`
     },
     {
       label: "Flights",
       href: `https://www.google.com/travel/flights?q=${encodeURIComponent(`flights to ${place}`)}`
     },
     {
-      label: "Map",
-      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`
+      label: "Live cams",
+      href: `https://www.google.com/search?q=${encodeURIComponent(`${place} live webcam`)}`
     }
   ];
 }
@@ -305,7 +305,7 @@ function clamp(value, min, max) {
 
 function MapView({ guesses, solved }) {
   const [wrapRef, size] = useElementSize();
-  const [mode, setMode] = useState("flat");
+  const [mode, setMode] = useState("globe");
   const [flatView, setFlatView] = useState({ x: 0, y: 0, k: 1 });
   const [globeView, setGlobeView] = useState({ rotate: [-12, -38, 0], k: 1 });
   const [isDragging, setIsDragging] = useState(false);

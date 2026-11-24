@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-09
+Last updated: 2026-11-24
 
 ## Purpose and maintenance
 
@@ -11,14 +11,16 @@ Keep this document current when development changes functionality, decisions, ou
 ## Repository and working directory
 
 - Repository: https://github.com/liacon/daily-capital.git
-- Application directory: `C:\Users\lcaug\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital`
+- Application directory: `C:\Users\lcaug\OneDrive\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital` (located here on 2026-11-24; the previous non-OneDrive directory is no longer present).
 - Current branch: `main`
-- Latest local application commit: `16d2874` — Match scoring share dots with red game markers. Earlier compact stats commit is `0b9aa63`, favicon commit is `c721731`, and analytics fix is `f0bfa4e`; independent production verification remains pending. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: introductory text beneath the title and compact responsive map sizing in `src/main.jsx` and `src/styles.css`, plus this status record. The introductory copy was already uncommitted when the map change began and has been preserved. No commit, push or deployment performed.
+- Latest local application commit: `886a0d0` — Add game intro and tighten map layout. Independent production verification remains pending for this and the subsequent-to-rollover releases recorded below. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: Globe default view and reordered result links in `src/main.jsx`, plus this status record. Working tree was clean before these changes. No commit, push or deployment performed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
 
+- On 2026-11-24, changed the starting map mode to Globe; Flat remains available via the existing toggle. Reloading starts in Globe, including when restoring a saved result; selecting a mode during play and Reset retain existing behavior. Result exploration links are now Map, Flights, Live cams for both solved and revealed results. Link destinations, analytics labels, scoring and saved-game data are unchanged.
+- Verification on 2026-11-24: all 13 existing tests, data validation (199 capitals/177 map features) and production build passed; the existing approximately 556 kB bundle warning remains. Chrome checks against the production build passed at 320px, 390px and 1280px: initial Globe selection, Flat toggle, zoom/reset, no horizontal overflow, exact result-link order/destinations, solved/revealed states and saved-result reload into Globe, with no page errors. Browser used an isolated context, fixed test date and sample weather. Screenshots/check report are at `C:\Users\lcaug\Documents\Codex\daily-capital-review-2026-11-24`. Vite's development dependency scan failed with local file-access/resolution errors after the folder relocation; the completed production build was served locally for browser validation instead. No dependencies installed or production settings changed.
 - Compact map layout developed locally on 2026-11-09: flat map uses a responsive 1.65 aspect ratio with a 260px minimum; globe keeps a taller panel (340px minimum, 640px maximum). Map no longer stretches with the adjacent results column. The SVG fills the independently sized panel, its resize observer uses actual dimensions, and both projections fit the full sphere below the toolbar with small edge padding. Narrow-screen control spacing prevents overlap. At 1280px viewport the flat panel shrinks from 680px to about 481px and bottom blank space from 135px to 13px; at 390px it shrinks from 330px to 260px with bottom space reduced from 73px to 16px. Existing introductory copy is retained.
 - Map verification on 2026-11-09: headless Chrome passed flat/globe layout, zoom, drag and reset checks at 320px, 390px, 768px and 1280px, with no overlapping toolbars, horizontal page overflow or page errors. A submitted Lisbon guess rendered inside the panel; revealing the target did not increase the flat panel's height; switching to globe showed the revealed target. All 13 existing tests, data validation, final production build and whitespace checks passed. Existing bundle-size warning remains. Before/after screenshots and measurements are in the continuation task's `outputs/map-spacing-preview/`; browser-check script is outside the application repository.
 - Introductory copy added locally on 2026-11-09 beneath the Daily Capital title, before the map: “Guess today’s capital city” and “A new capital city puzzle every day. Enter your first guess below, then use the clues to find the answer.” Uses the user's wording, a small teal heading and restrained body text. Existing first-play hint remains available. Browser layout checks passed at 320px, 390px, 600px and 1280px: exact copy, title/intro/map order, no horizontal page overflow or page errors. Mobile and desktop screenshots saved in the continuation task's `outputs/intro-preview/`. Data validation and production build passed with the existing bundle-size warning.
@@ -118,7 +120,8 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Publish introductory copy and compact map layout | User-requested explanation placed beneath the title and excess space removed from the default map panel. Local changes remain uncommitted and undeployed. |
+| Release | Publish Globe default and reordered result links | Requested on 2026-11-24. Local source change; not committed or deployed. |
+| Release | Verify introductory copy and compact map layout deployment | Committed as `886a0d0`. Independent production verification pending. |
 | Release | Verify share-colour correction deployment | Committed as `16d2874`: scorching scores 85–99 share red instead of green. Independent production verification pending. |
 | Release | Verify compact results stats deployment | User approved the preview; committed as `0b9aa63`. Independent production verification pending. Original Share relocation `354ced0` is live according to the user's observation on 2026-11-04; they report players using it. No independent analytics check performed. |
 | Release | Verify completion-analytics release | Committed as `f0bfa4e`; user reports push/deployment underway. Local automated tests, build, and browser checks passed. Independent production verification pending. |
@@ -258,7 +261,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. Review the compact map preview, then commit/push the combined introductory copy and map layout in `src/main.jsx`, `src/styles.css`, and this status record when authorized. Verify production afterwards. Share-colour correction, compact stats, favicon and completion-analytics releases also await independent production verification in this task.
+1. User to commit/push the Globe default and result-link order in `src/main.jsx` and this status record after verification. Verify production afterwards. Earlier intro/map layout, share-colour correction, compact stats, favicon and completion-analytics releases also await independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.
