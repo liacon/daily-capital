@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { applyCapitalCorrections, EQUATORIAL_GUINEA_CORRECTION } from "../src/capital-corrections.js";
 
 const root = process.cwd();
 const sourceDir = path.join(root, "data-sources");
@@ -37,7 +38,7 @@ function displayCapitalName(props) {
 const places = readJson(placesPath);
 const countries = readJson(countriesPath);
 
-const capitals = places.features
+const capitals = applyCapitalCorrections(places.features
   .filter((feature) => {
     const props = feature.properties;
     return props.featurecla === "Admin-0 capital" && Number(props.adm0cap) === 1;
@@ -52,11 +53,12 @@ const capitals = places.features
       sovereign: props.sov0name,
       lat: Number(lat.toFixed(6)),
       lon: Number(lon.toFixed(6)),
-      sortName: props.name
+      sortName: props.adm0name === EQUATORIAL_GUINEA_CORRECTION.current.country
+        ? EQUATORIAL_GUINEA_CORRECTION.previous.capital : props.name
     };
   })
   .sort((a, b) => a.sortName.localeCompare(b.sortName, "en"))
-  .map(({ sortName, ...capital }) => capital);
+  .map(({ sortName, ...capital }) => capital));
 
 const world = {
   type: "FeatureCollection",
@@ -91,7 +93,9 @@ fs.writeFileSync(
         included:
           "Records where featurecla is Admin-0 capital and adm0cap equals 1.",
         excluded:
-          "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places."
+          "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places.",
+        corrections:
+          "Reviewed relocations are applied after sorting; sources and historical records are in src/capital-corrections.js."
       },
       capitals
     },

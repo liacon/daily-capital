@@ -4,7 +4,8 @@
     "sourceUrl": "https://github.com/nvkelso/natural-earth-vector/tree/master/geojson",
     "license": "Public domain",
     "included": "Records where featurecla is Admin-0 capital and adm0cap equals 1.",
-    "excluded": "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places."
+    "excluded": "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places.",
+    "corrections": "Reviewed relocations are applied after sorting; sources and historical records are in src/capital-corrections.js."
   },
   "capitals": [
     {
@@ -808,12 +809,12 @@
       "lon": 171.38
     },
     {
-      "id": "malabo-equatorial-guinea",
-      "capital": "Malabo",
+      "id": "ciudad-de-la-paz-equatorial-guinea",
+      "capital": "Ciudad de la Paz",
       "country": "Equatorial Guinea",
       "sovereign": "Equatorial Guinea",
-      "lat": 3.750015,
-      "lon": 8.783278
+      "lat": 1.5925,
+      "lon": 10.823611
     },
     {
       "id": "male-maldives",

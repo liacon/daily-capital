@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-24
+Last updated: 2026-11-25
 
 ## Purpose and maintenance
 
@@ -13,12 +13,16 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\OneDrive\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital` (located here on 2026-11-24; the previous non-OneDrive directory is no longer present).
 - Current branch: `main`
-- Latest local application commit: `886a0d0` — Add game intro and tighten map layout. Independent production verification remains pending for this and the subsequent-to-rollover releases recorded below. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: Globe default view and reordered result links in `src/main.jsx`, plus this status record. Working tree was clean before these changes. No commit, push or deployment performed.
+- Latest local application commit: `61a1caf` — Default to globe view and reorder result links. Independent production verification remains pending for this and the subsequent-to-rollover releases recorded below. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
+- Current uncommitted work: Equatorial Guinea capital correction, date-specific catalogue/schedule/scoring/restoration, correction notices, generation/validation changes, regression tests and documentation. Working tree was clean before these changes. No commit, push or deployment performed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
 
 ## Current implementation
 
+- Equatorial Guinea correction prepared on 2026-11-25 for deployment on/after 26 November: the official capital changed on 2 January 2026, but the game catalogue switches from Malabo to Ciudad de la Paz at **2026-11-26 00:00 UTC** to preserve played puzzles. Sources, separate city IDs and coordinates are recorded in `src/capital-corrections.js`; see README for the government decree and UK PCGN coordinate reference. Current runtime JSON and data generator now contain Ciudad de la Paz (1.592500, 10.823611); the historical Malabo record remains available for past dates and saved guesses. Oyala is a search alias for the new city; Malabo is not.
+- The replacement stays in the original deck slot, keeping all other daily answers unchanged. The historical catalogue and scoring cache remain separate, preserving every previous score and the 25 November answer, with no destructive storage migration. The existing UTC rollover switches catalogue, search and daily target together.
+- Explanation: dismissible notice above the map from 26 November through 2 December, with official source link and reassurance that saved results/streaks remain. Dismissal persists per browser. A note also appears on the completed Malabo result and in an expandable section beside its recent history. No pre-solve correction notice appears on 25 November; answer-sensitive notices are suppressed if they would expose the new capital as a target.
+- Verification: **19 tests passed**, including 6 new correction tests protecting 3,000 scheduled targets, all 39,601 historical score combinations, old unfinished/won/revealed restoration, notice boundaries, distinct city coordinates and generator idempotence. Data validation and production build passed (existing approximately 558 kB bundle warning). Regenerated both datasets in a separate review folder and confirmed exact equality with runtime JSON. Chrome checks of the production build covered 25 November solve/reload, simulated midnight transition, retained history/streak, notice at 320/390/1280px, persistent dismissal, history explanation, new-name/Oyala lookup, rejection of Malabo after cutover, 3 December notice expiry, and new-capital preview/coordinates. No page errors. Screenshots/report: `C:\Users\lcaug\Documents\Codex\daily-capital-correction-2026-11-25`.
 - On 2026-11-24, changed the starting map mode to Globe; Flat remains available via the existing toggle. Reloading starts in Globe, including when restoring a saved result; selecting a mode during play and Reset retain existing behavior. Result exploration links are now Map, Flights, Live cams for both solved and revealed results. Link destinations, analytics labels, scoring and saved-game data are unchanged.
 - Verification on 2026-11-24: all 13 existing tests, data validation (199 capitals/177 map features) and production build passed; the existing approximately 556 kB bundle warning remains. Chrome checks against the production build passed at 320px, 390px and 1280px: initial Globe selection, Flat toggle, zoom/reset, no horizontal overflow, exact result-link order/destinations, solved/revealed states and saved-result reload into Globe, with no page errors. Browser used an isolated context, fixed test date and sample weather. Screenshots/check report are at `C:\Users\lcaug\Documents\Codex\daily-capital-review-2026-11-24`. Vite's development dependency scan failed with local file-access/resolution errors after the folder relocation; the completed production build was served locally for browser validation instead. No dependencies installed or production settings changed.
 - Compact map layout developed locally on 2026-11-09: flat map uses a responsive 1.65 aspect ratio with a 260px minimum; globe keeps a taller panel (340px minimum, 640px maximum). Map no longer stretches with the adjacent results column. The SVG fills the independently sized panel, its resize observer uses actual dimensions, and both projections fit the full sphere below the toolbar with small edge padding. Narrow-screen control spacing prevents overlap. At 1280px viewport the flat panel shrinks from 680px to about 481px and bottom blank space from 135px to 13px; at 390px it shrinks from 330px to 260px with bottom space reduced from 73px to 16px. Existing introductory copy is retained.
@@ -120,7 +124,8 @@ The previous task, “Build capital-city guessing game MVP”, became unusable f
 
 | Priority | Item | Evidence / status |
 | --- | --- | --- |
-| Release | Publish Globe default and reordered result links | Requested on 2026-11-24. Local source change; not committed or deployed. |
+| Release | Publish Equatorial Guinea correction | Prepared and tested locally. User agreed to deployment on/after 26 November after UTC midnight; no commit, push or scheduled deployment performed. Players must load the updated build to receive the correction and notice. |
+| Release | Verify Globe default and reordered result links | Committed as `61a1caf`. Independent production verification pending. |
 | Release | Verify introductory copy and compact map layout deployment | Committed as `886a0d0`. Independent production verification pending. |
 | Release | Verify share-colour correction deployment | Committed as `16d2874`: scorching scores 85–99 share red instead of green. Independent production verification pending. |
 | Release | Verify compact results stats deployment | User approved the preview; committed as `0b9aa63`. Independent production verification pending. Original Share relocation `354ced0` is live according to the user's observation on 2026-11-04; they report players using it. No independent analytics check performed. |
@@ -261,7 +266,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. User to commit/push the Globe default and result-link order in `src/main.jsx` and this status record after verification. Verify production afterwards. Earlier intro/map layout, share-colour correction, compact stats, favicon and completion-analytics releases also await independent production verification in this task.
+1. User to review the correction notice, then commit/push the Equatorial Guinea correction on/after 26 November after UTC midnight as agreed. Verify the deployed revision, new-city search and notice. No deployment automation or reminder was created; old browser tabs need the updated build. Earlier releases also await independent production verification in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.

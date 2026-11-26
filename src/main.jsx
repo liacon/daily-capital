@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { geoDistance, geoGraticule, geoNaturalEarth1, geoOrthographic, geoPath } from "d3-geo";
-import capitalsData from "./data/capitals.json" with { type: "json" };
+import { capitalsForDate } from "./capital-catalog.js";
+import { dayNumber, targetForDate } from "./daily-puzzle.js";
+import { EQUATORIAL_GUINEA_CORRECTION as capitalCorrection, showCapitalCorrection } from "./capital-corrections.js";
 import worldData from "./data/world.json";
 import { scoreGuess } from "./scoring.js";
 import { utcDateString, watchUtcDate } from "./daily-clock.js";
 import { initialGuessesForToday, initialRevealForToday, computeStreak } from "./game-state.js";
 import "./styles.css";
 
-const CAPITALS = capitalsData.capitals;
-const GAME_START = "2024-01-01";
 const STORAGE_KEY = "loughlane-capital-daily-v1";
 const TARGET_COLOR = "#1f9f65";
 const MIN_ZOOM = 1;
@@ -18,57 +18,15 @@ const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 const SITE_URL = "https://daily-capital.com";
 const CAPITAL_ALIASES = {
   "k-benhavn-denmark": ["København", "Kobenhavn"],
-  "nur-sultan-kazakhstan": ["Nur-Sultan", "Nursultan"]
+  "nur-sultan-kazakhstan": ["Nur-Sultan", "Nursultan"],
+  "ciudad-de-la-paz-equatorial-guinea": ["Oyala"]
 };
 
-function dayNumber(dateString) {
-  const start = Date.parse(`${GAME_START}T00:00:00Z`);
-  const day = Date.parse(`${dateString}T00:00:00Z`);
-  return Math.floor((day - start) / 86400000) + 1;
-}
-
-function hashString(input) {
-  let hash = 2166136261;
-  for (let index = 0; index < input.length; index += 1) {
-    hash ^= input.charCodeAt(index);
-    hash = Math.imul(hash, 16777619);
-  }
-  return hash >>> 0;
-}
-
-function seededRandom(seed) {
-  let state = seed || 1;
-  return () => {
-    state = Math.imul(state ^ (state >>> 15), 1 | state);
-    state ^= state + Math.imul(state ^ (state >>> 7), 61 | state);
-    return ((state ^ (state >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function shuffledCapitalDeck(cycle) {
-  const deck = [...CAPITALS];
-  const random = seededRandom(hashString(`loughlane-capital-cycle-${cycle}`));
-
-  for (let index = deck.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(random() * (index + 1));
-    [deck[index], deck[swapIndex]] = [deck[swapIndex], deck[index]];
-  }
-
-  return deck;
-}
-
-function targetForDate(dateString) {
-  const puzzleIndex = Math.max(0, dayNumber(dateString) - 1);
-  const cycle = Math.floor(puzzleIndex / CAPITALS.length);
-  const deckIndex = puzzleIndex % CAPITALS.length;
-  return shuffledCapitalDeck(cycle)[deckIndex];
-}
-
-function targetFromUrl() {
+function targetFromUrl(capitals) {
   const params = new URLSearchParams(window.location.search);
   const targetId = params.get("target");
   if (!targetId) return null;
-  return CAPITALS.find((capital) => capital.id === targetId) || null;
+  return capitals.find((capital) => capital.id === targetId) || null;
 }
 
 function normalizeSearchValue(value) {
@@ -659,6 +617,23 @@ function WeatherSummary({ city }) {
   );
 }
 
+function CapitalCorrectionNote({ onDismiss }) {
+  return (
+    <aside className="capital-correction" aria-label="Capital correction">
+      <div>
+        <h2>A correction to the 25 November puzzle</h2>
+        <p>
+          Our puzzle used Malabo, Equatorial Guinea’s former capital. Ciudad de la Paz became
+          the capital on 2 January 2026. Future puzzles use Ciudad de la Paz from 26 November.
+          Your saved results and streak are unchanged.
+        </p>
+        <a href={capitalCorrection.source} target="_blank" rel="noreferrer">Official announcement</a>
+      </div>
+      {onDismiss && <button type="button" onClick={onDismiss} aria-label="Dismiss capital correction">Got it</button>}
+    </aside>
+  );
+}
+
 function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, onShare, copied }) {
   const exploreLinks = buildExploreLinks(target);
   const stats = computePlayerStats(history);
@@ -712,6 +687,8 @@ function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, on
       )}
 
       <WeatherSummary city={target} />
+
+      {target.id === capitalCorrection.previous.id && <CapitalCorrectionNote />}
 
       <div className="fact-grid">
         <div>
@@ -791,7 +768,8 @@ function App() {
 
 function DailyGame({ today, onDateChange }) {
   const puzzleNumber = dayNumber(today);
-  const demoTarget = useMemo(() => targetFromUrl(), []);
+  const capitals = useMemo(() => capitalsForDate(today), [today]);
+  const demoTarget = useMemo(() => targetFromUrl(capitals), [capitals]);
   const target = useMemo(() => demoTarget || targetForDate(today), [demoTarget, today]);
   const [store, setStore] = useState(loadStore);
   const [input, setInput] = useState("");
@@ -821,8 +799,8 @@ function DailyGame({ today, onDateChange }) {
 
   const suggestions = useMemo(() => {
     const query = normalizeSearchValue(input);
-    if (!query) return CAPITALS.slice(0, 8);
-    return CAPITALS.map((capital) => ({
+    if (!query) return capitals.slice(0, 8);
+    return capitals.map((capital) => ({
       capital,
       rank: rankCapitalSuggestion(capital, query)
     }))
@@ -830,7 +808,7 @@ function DailyGame({ today, onDateChange }) {
       .sort((a, b) => a.rank - b.rank || a.capital.capital.localeCompare(b.capital.capital, "en"))
       .map((item) => item.capital)
       .slice(0, 8);
-  }, [input]);
+  }, [input, capitals]);
 
   const recentHistory = useMemo(() => {
     return Object.entries(store.history)
@@ -946,11 +924,22 @@ function DailyGame({ today, onDateChange }) {
     });
   }
 
+  function dismissCapitalCorrection() {
+    setStore((current) => {
+      const next = {
+        ...current,
+        dismissedNotices: { ...current.dismissedNotices, [capitalCorrection.id]: true }
+      };
+      saveStore(next);
+      return next;
+    });
+  }
+
   function submitGuess(capital) {
     if (!ensureCurrentDay() || solved) return;
     const selected =
       capital ||
-      CAPITALS.find((item) => capitalMatchesInput(item, input));
+      capitals.find((item) => capitalMatchesInput(item, input));
 
     if (!selected) {
       setMessage("Only capital cities can be guessed.");
@@ -963,7 +952,7 @@ function DailyGame({ today, onDateChange }) {
       return;
     }
 
-    const scored = { ...selected, ...scoreGuess(selected, target) };
+    const scored = { ...selected, ...scoreGuess(selected, target, capitals) };
     setGuesses((current) => [...current, scored]);
     setInput("");
     setMessage(scored.score === 100 ? "Solved. Nicely done." : `${proximityLabel(scored.score)}: ${scored.score}/100`);
@@ -1032,6 +1021,11 @@ function DailyGame({ today, onDateChange }) {
           <span>{today}</span>
         </div>
       </header>
+
+      {!demoTarget && showCapitalCorrection(today, store.dismissedNotices?.[capitalCorrection.id]) &&
+        (target.id !== capitalCorrection.current.id || solved) && (
+          <CapitalCorrectionNote onDismiss={dismissCapitalCorrection} />
+        )}
 
       <section className="game-layout">
         <MapView guesses={mapGuesses} solved={solved} />
@@ -1181,6 +1175,14 @@ function DailyGame({ today, onDateChange }) {
                 ))}
               </ul>
             )}
+            {!demoTarget && today >= capitalCorrection.gameFrom &&
+              (target.id !== capitalCorrection.current.id || solved) &&
+              recentHistory.some(([date]) => date === capitalCorrection.puzzleDate) && (
+                <details className="history-correction">
+                  <summary>Correction to the 25 November puzzle</summary>
+                  <CapitalCorrectionNote />
+                </details>
+              )}
           </section>
         </aside>
       </section>

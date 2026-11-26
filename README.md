@@ -18,7 +18,7 @@ The production build is written to `dist/`.
 - Open games switch to the new puzzle at UTC midnight, or when the tab resumes after sleeping. Previous guesses and completed results remain saved under their original date.
 - Daily targets are drawn from a deterministic shuffled deck, so all 199 capitals appear once before any repeats.
 - The daily puzzle number starts at `#1` on 2024-01-01.
-- Players search for a capital, make guesses, and see each guess as a dot on a flat world map. Suggestions match capital names and accepted aliases, not country names.
+- Players search for a capital, make guesses, and see each guess as a dot on the globe by default. Suggestions match capital names and accepted aliases, not country names.
 - The map can be switched between flat and globe views.
 - Flat mode can be dragged and zoomed with the mouse wheel or zoom/reset buttons.
 - Globe mode rotates to center the latest guess, then can be manually rotated by dragging and zoomed with the same controls.
@@ -95,6 +95,21 @@ npm run generate:data
 ```
 
 ## Dataset Edge Cases
+
+### Equatorial Guinea correction (26 November 2026 game cutover)
+
+Ciudad de la Paz replaced Malabo as the national capital under the [2 January 2026 decree](https://www.guineaecuatorialpress.com/index.php/noticias/decreto_ley_por_el_que_se_declara_la_ciudad_de_la_paz_djibloho_capital_de_la_republica_de_guinea_ecuatorial). The [UK PCGN factfile, page 5](https://assets.publishing.service.gov.uk/media/695fb2f757e7407fe07765d8/Equatorial_Guinea_Toponymic_Factfile.pdf) supplies the mainland location: 01°35′33″N, 10°49′25″E (1.592500, 10.823611). Oyala is accepted as a former name of Ciudad de la Paz; Malabo is a different city, never an alias.
+
+- `src/capital-corrections.js` records the official change date, sources, old/new records and the separate game cutover of **2026-11-26 at 00:00 UTC**. This later date preserves puzzles already played; it is not the date of the real-world relocation.
+- The current JSON contains Ciudad de la Paz in Malabo's original array slot. The generator applies the correction after sorting and preserves the slot, so other scheduled answers are not shuffled. Do not alphabetically re-sort the runtime list.
+- `src/capital-catalog.js` supplies the old list before the cutover and the new list from the cutover. Daily selection, suggestions, scoring and restored guesses use the list for the puzzle date. Historical IDs and coordinates are retained separately; saved history is not migrated or renamed.
+- The top correction notice appears from 26 November through 2 December inclusive, unless dismissed in that browser. It links to the official announcement. The completed Malabo result also contains the explanation, and a collapsible explanation accompanies its recent-history entry after the cutover. Pre-solve notices are suppressed if the answer itself would be exposed.
+- Dismissal is stored under `dismissedNotices["equatorial-guinea-2026"]` in the existing game store without changing plays or history.
+- `test/capital-correction.test.mjs` protects 3,000 scheduled targets and the complete historical 199-by-199 score matrix using digests captured before this change; it also checks restoration, date boundaries, distinct city identities, coordinates and repeatable regeneration.
+
+The release is prepared locally. Deploy on/after 26 November as agreed; the date gate does not publish the update. Players need to load the updated build to receive it. No automatic deployment or reminder has been scheduled.
+
+### Natural Earth selection
 
 The game includes records where Natural Earth marks a place as `Admin-0 capital` and `adm0cap` equals `1`.
 

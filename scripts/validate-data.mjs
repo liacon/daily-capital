@@ -1,5 +1,6 @@
 import capitalsData from "../src/data/capitals.json" with { type: "json" };
 import worldData from "../src/data/world.json" with { type: "json" };
+import { EQUATORIAL_GUINEA_CORRECTION as correction } from "../src/capital-corrections.js";
 
 const { capitals } = capitalsData;
 const errors = [];
@@ -14,6 +15,12 @@ if (!worldData?.features?.length) {
 
 const ids = new Set();
 const names = new Set();
+
+const equatorialGuinea = capitals.filter((city) => city.country === "Equatorial Guinea");
+if (equatorialGuinea.length !== 1 ||
+    Object.entries(correction.current).some(([key, value]) => equatorialGuinea[0]?.[key] !== value)) {
+  errors.push("Equatorial Guinea must use Ciudad de la Paz and its verified mainland coordinates.");
+}
 
 for (const capital of capitals) {
   const required = ["id", "capital", "country", "lat", "lon"];

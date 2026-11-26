@@ -1,21 +1,21 @@
-import capitalsData from "./data/capitals.json" with { type: "json" };
+import { capitalsForDate, capitalForSavedId } from "./capital-catalog.js";
 import { scoreGuess } from "./scoring.js";
 import { utcDateString } from "./daily-clock.js";
 
-export function guessesFromSavedPlay(play, target) {
+export function guessesFromSavedPlay(play, target, date = utcDateString()) {
   if (!play?.guesses || play.targetId !== target.id) return [];
 
   return play.guesses.flatMap((guessId) => {
-    const capital = capitalsData.capitals.find((item) => item.id === guessId);
+    const capital = capitalForSavedId(guessId, date);
     if (!capital) return [];
-    return [{ ...capital, ...scoreGuess(capital, target) }];
+    return [{ ...capital, ...scoreGuess(capital, target, capitalsForDate(date)) }];
   });
 }
 
 export function initialGuessesForToday(store, today, target, demoTarget) {
   if (demoTarget) return [];
 
-  const savedGuesses = guessesFromSavedPlay(store.plays?.[today], target);
+  const savedGuesses = guessesFromSavedPlay(store.plays?.[today], target, today);
   if (savedGuesses.length > 0) return savedGuesses;
 
   if (store.history?.[today]?.won) {

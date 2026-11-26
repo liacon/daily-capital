@@ -19,7 +19,7 @@ const OCEANIA_COUNTRIES = new Set([
   "Tuvalu",
   "Vanuatu"
 ]);
-const decayByTarget = new Map();
+const decayByCatalog = new WeakMap();
 
 function toRadians(value) {
   return (value * Math.PI) / 180;
@@ -37,11 +37,13 @@ export function distanceKm(a, b) {
   return 2 * earthRadiusKm * Math.asin(Math.sqrt(haversine));
 }
 
-function decayForTarget(target) {
+function decayForTarget(target, capitals) {
+  if (!decayByCatalog.has(capitals)) decayByCatalog.set(capitals, new Map());
+  const decayByTarget = decayByCatalog.get(capitals);
   if (decayByTarget.has(target.id)) return decayByTarget.get(target.id);
 
   const existingDecay = OCEANIA_COUNTRIES.has(target.country) ? MAX_DECAY_KM : BASE_DECAY_KM;
-  const distances = capitalsData.capitals
+  const distances = capitals
     .filter((capital) => capital.id !== target.id)
     .map((capital) => distanceKm(capital, target))
     .sort((a, b) => a - b);
@@ -53,12 +55,12 @@ function decayForTarget(target) {
   return decay;
 }
 
-export function scoreGuess(guess, target) {
+export function scoreGuess(guess, target, capitals = capitalsData.capitals) {
   if (guess.id === target.id) {
     return { distance: 0, score: 100 };
   }
   const distance = distanceKm(guess, target);
   const closeness = Math.max(0, 1 - distance / MAX_DISTANCE_KM);
-  const score = Math.max(0, Math.round(100 * Math.exp(-distance / decayForTarget(target)) * closeness));
+  const score = Math.max(0, Math.round(100 * Math.exp(-distance / decayForTarget(target, capitals)) * closeness));
   return { distance, score: Math.min(99, score) };
 }
