@@ -1,21 +1,21 @@
-import { capitalsForDate, capitalForSavedId } from "./capital-catalog.js";
+import { catalogVersionForDate, capitalForSavedId } from "./capital-catalog.js";
 import { scoreGuess } from "./scoring.js";
 import { utcDateString } from "./daily-clock.js";
 
-export function guessesFromSavedPlay(play, target, date = utcDateString()) {
+export function guessesFromSavedPlay(play, target, date = utcDateString(), version = catalogVersionForDate(date)) {
   if (!play?.guesses || play.targetId !== target.id) return [];
 
   return play.guesses.flatMap((guessId) => {
-    const capital = capitalForSavedId(guessId, date);
+    const capital = capitalForSavedId(guessId, date, version);
     if (!capital) return [];
-    return [{ ...capital, ...scoreGuess(capital, target, capitalsForDate(date)) }];
+    return [{ ...capital, ...scoreGuess(capital, target, version.scoring) }];
   });
 }
 
-export function initialGuessesForToday(store, today, target, demoTarget) {
+export function initialGuessesForToday(store, today, target, demoTarget, version = catalogVersionForDate(today)) {
   if (demoTarget) return [];
 
-  const savedGuesses = guessesFromSavedPlay(store.plays?.[today], target, today);
+  const savedGuesses = guessesFromSavedPlay(store.plays?.[today], target, today, version);
   if (savedGuesses.length > 0) return savedGuesses;
 
   if (store.history?.[today]?.won) {

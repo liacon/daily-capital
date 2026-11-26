@@ -1,3 +1,6 @@
+import { createHash } from "node:crypto";
+import legacyData from "../src/data/catalogs/v2.json" with { type: "json" };
+import { REVIEWED_CAPITALS } from "../src/catalogue-update.js";
 import capitalsData from "../src/data/capitals.json" with { type: "json" };
 import worldData from "../src/data/world.json" with { type: "json" };
 import { EQUATORIAL_GUINEA_CORRECTION as correction } from "../src/capital-corrections.js";
@@ -5,12 +8,29 @@ import { EQUATORIAL_GUINEA_CORRECTION as correction } from "../src/capital-corre
 const { capitals } = capitalsData;
 const errors = [];
 
-if (!Array.isArray(capitals) || capitals.length < 190) {
-  errors.push(`Expected at least 190 capitals, found ${capitals?.length ?? 0}.`);
+if (!Array.isArray(capitals) || capitals.length !== 203) {
+  errors.push(`Expected 203 capitals in catalogue v3, found ${capitals?.length ?? 0}.`);
 }
 
 if (!worldData?.features?.length) {
   errors.push("World map data is empty.");
+}
+
+
+// Published catalogue order and coordinates are immutable: create a new version to change them.
+const digest = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+if (digest(legacyData.capitals) !== "d2374f8bfc56631f9b322ead546a8fd90f932a2240c16490f40d86c1a85eed0c") errors.push("Frozen v2 catalogue changed.");
+if (digest(capitals) !== "1338348e9404424a21a179f6afda6757cb5157278e2f831679729aae3d750cd1") errors.push("Catalogue v3 changed; introduce a new version instead of rewriting a published deck.");
+for (const entry of REVIEWED_CAPITALS) {
+  const city = capitals.find(city => city.id === entry.id);
+  if (!city || ["capital", "country", "sovereign", "lat", "lon"].some(key => city[key] !== entry[key])) {
+    errors.push("Missing or incorrect reviewed capital: " + entry.id);
+  }
+  if (entry.replaces && capitals.some(city => city.id === entry.replaces)) errors.push("Former record in current catalogue: " + entry.replaces);
+}
+if (new Set(capitals.map(city => city.country)).size !== 196) errors.push("Expected 196 country labels in v3.");
+for (const id of ["cotonou-benin", "colombo-sri-lanka", "mbabane-eswatini", "pretoria-south-africa", "cape-town-south-africa", "bloemfontein-south-africa"]) {
+  if (!capitals.some(city => city.id === id)) errors.push("Missing retained capital seat: " + id);
 }
 
 const ids = new Set();
@@ -40,10 +60,10 @@ for (const capital of capitals) {
   }
   names.add(capital.capital);
 
-  if (capital.lat < -90 || capital.lat > 90) {
+  if (!Number.isFinite(capital.lat) || capital.lat < -90 || capital.lat > 90) {
     errors.push(`Invalid latitude for ${capital.capital}: ${capital.lat}`);
   }
-  if (capital.lon < -180 || capital.lon > 180) {
+  if (!Number.isFinite(capital.lon) || capital.lon < -180 || capital.lon > 180) {
     errors.push(`Invalid longitude for ${capital.capital}: ${capital.lon}`);
   }
 }

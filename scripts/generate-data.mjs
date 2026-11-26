@@ -1,3 +1,4 @@
+import { applyCatalogueUpdate } from "../src/catalogue-update.js";
 import fs from "node:fs";
 import path from "node:path";
 import { applyCapitalCorrections, EQUATORIAL_GUINEA_CORRECTION } from "../src/capital-corrections.js";
@@ -38,7 +39,7 @@ function displayCapitalName(props) {
 const places = readJson(placesPath);
 const countries = readJson(countriesPath);
 
-const capitals = applyCapitalCorrections(places.features
+const capitals = applyCatalogueUpdate(applyCapitalCorrections(places.features
   .filter((feature) => {
     const props = feature.properties;
     return props.featurecla === "Admin-0 capital" && Number(props.adm0cap) === 1;
@@ -58,7 +59,7 @@ const capitals = applyCapitalCorrections(places.features
     };
   })
   .sort((a, b) => a.sortName.localeCompare(b.sortName, "en"))
-  .map(({ sortName, ...capital }) => capital));
+  .map(({ sortName, ...capital }) => capital)));
 
 const world = {
   type: "FeatureCollection",
@@ -91,11 +92,11 @@ fs.writeFileSync(
           "https://github.com/nvkelso/natural-earth-vector/tree/master/geojson",
         license: "Public domain",
         included:
-          "Records where featurecla is Admin-0 capital and adm0cap equals 1.",
+          "Natural Earth primary capitals plus reviewed catalogue v3 corrections and additions.",
         excluded:
-          "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places.",
+          "Unreviewed alternate, regional, former and non-capital records.",
         corrections:
-          "Reviewed relocations are applied after sorting; sources and historical records are in src/capital-corrections.js."
+          "See src/capital-corrections.js and src/catalogue-update.js for sources; historical v2 data is frozen in src/data/catalogs/v2.json."
       },
       capitals
     },

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createHash } from "node:crypto";
 import { EQUATORIAL_GUINEA_CORRECTION as correction, applyCapitalCorrections, showCapitalCorrection } from "../src/capital-corrections.js";
-import { capitalsForDate, capitalForSavedId } from "../src/capital-catalog.js";
+import { capitalsForDate, capitalForSavedId, catalogVersionForDate } from "../src/capital-catalog.js";
 import { targetForDate } from "../src/daily-puzzle.js";
 import { scoreGuess, distanceKm } from "../src/scoring.js";
 import { initialGuessesForToday, initialRevealForToday, computeStreak } from "../src/game-state.js";
@@ -25,11 +25,11 @@ test("capital relocation activates on the game cutover, with a distinct ID and m
   assert.equal(capitalForSavedId(correction.previous.id, "2026-11-26").capital, "Malabo");
 });
 
-test("3,000 scheduled puzzles retain their original slots; only future Malabo slots are replaced", () => {
+test("legacy schedule retains all 3,000 original slots when explicitly selected", () => {
   const ids = [];
   for (let index = 0; index < 3000; index += 1) {
     const date = new Date(Date.UTC(2024, 0, 1 + index)).toISOString().slice(0, 10);
-    const target = targetForDate(date);
+    const target = targetForDate(date, catalogVersionForDate(date < correction.gameFrom ? date : correction.gameFrom));
     if (date >= correction.gameFrom) assert.notEqual(target.id, correction.previous.id);
     ids.push(target.id === correction.current.id ? correction.previous.id : target.id);
   }

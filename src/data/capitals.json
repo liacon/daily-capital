@@ -3,9 +3,9 @@
     "source": "Natural Earth ne_10m_populated_places_simple.geojson",
     "sourceUrl": "https://github.com/nvkelso/natural-earth-vector/tree/master/geojson",
     "license": "Public domain",
-    "included": "Records where featurecla is Admin-0 capital and adm0cap equals 1.",
-    "excluded": "Admin-0 region capitals, Admin-0 alternate capitals, Admin-1 capitals, non-capital populated places.",
-    "corrections": "Reviewed relocations are applied after sorting; sources and historical records are in src/capital-corrections.js."
+    "included": "Natural Earth primary capitals plus reviewed catalogue v3 corrections and additions.",
+    "excluded": "Unreviewed alternate, regional, former and non-capital records.",
+    "corrections": "See src/capital-corrections.js and src/catalogue-update.js for sources; historical v2 data is frozen in src/data/catalogs/v2.json."
   },
   "capitals": [
     {
@@ -119,6 +119,14 @@
       "sovereign": "Eritrea",
       "lat": 15.333339,
       "lon": 38.933324
+    },
+    {
+      "id": "nur-sultan-kazakhstan",
+      "capital": "Astana",
+      "country": "Kazakhstan",
+      "sovereign": "Kazakhstan",
+      "lat": 51.181125,
+      "lon": 71.427774
     },
     {
       "id": "asuncion-paraguay",
@@ -345,14 +353,6 @@
       "lon": -58.432513
     },
     {
-      "id": "bujumbura-burundi",
-      "capital": "Bujumbura",
-      "country": "Burundi",
-      "sovereign": "Burundi",
-      "lat": -3.376087,
-      "lon": 29.360006
-    },
-    {
       "id": "cairo-egypt",
       "capital": "Cairo",
       "country": "Egypt",
@@ -401,6 +401,14 @@
       "lon": 28.857711
     },
     {
+      "id": "ciudad-de-la-paz-equatorial-guinea",
+      "capital": "Ciudad de la Paz",
+      "country": "Equatorial Guinea",
+      "sovereign": "Equatorial Guinea",
+      "lat": 1.5925,
+      "lon": 10.823611
+    },
+    {
       "id": "colombo-sri-lanka",
       "capital": "Colombo",
       "country": "Sri Lanka",
@@ -415,6 +423,14 @@
       "sovereign": "Guinea",
       "lat": 9.533469,
       "lon": -13.682181
+    },
+    {
+      "id": "k-benhavn-denmark",
+      "capital": "Copenhagen",
+      "country": "Denmark",
+      "sovereign": "Denmark",
+      "lat": 55.68051,
+      "lon": 12.56154
     },
     {
       "id": "cotonou-benin",
@@ -441,14 +457,6 @@
       "lon": 36.29805
     },
     {
-      "id": "dar-es-salaam-tanzania",
-      "capital": "Dar es Salaam",
-      "country": "Tanzania",
-      "sovereign": "United Republic of Tanzania",
-      "lat": -6.798067,
-      "lon": 39.266396
-    },
-    {
       "id": "dhaka-bangladesh",
       "capital": "Dhaka",
       "country": "Bangladesh",
@@ -471,6 +479,14 @@
       "sovereign": "Djibouti",
       "lat": 11.595014,
       "lon": 43.148002
+    },
+    {
+      "id": "dodoma-tanzania",
+      "capital": "Dodoma",
+      "country": "Tanzania",
+      "sovereign": "Tanzania",
+      "lat": -6.183306,
+      "lon": 35.750004
     },
     {
       "id": "doha-qatar",
@@ -527,6 +543,14 @@
       "sovereign": "Guyana",
       "lat": 6.801974,
       "lon": -58.167029
+    },
+    {
+      "id": "gitega-burundi",
+      "capital": "Gitega",
+      "country": "Burundi",
+      "sovereign": "Burundi",
+      "lat": -3.426007,
+      "lon": 29.843594
     },
     {
       "id": "guatemala-city-guatemala",
@@ -609,6 +633,14 @@
       "lon": 35.206626
     },
     {
+      "id": "juba-south-sudan",
+      "capital": "Juba",
+      "country": "South Sudan",
+      "sovereign": "South Sudan",
+      "lat": 4.829975,
+      "lon": 31.580026
+    },
+    {
       "id": "kabul-afghanistan",
       "capital": "Kabul",
       "country": "Afghanistan",
@@ -671,14 +703,6 @@
       "sovereign": "Congo (Kinshasa)",
       "lat": -4.327778,
       "lon": 15.313026
-    },
-    {
-      "id": "k-benhavn-denmark",
-      "capital": "Copenhagen",
-      "country": "Denmark",
-      "sovereign": "Denmark",
-      "lat": 55.68051,
-      "lon": 12.56154
     },
     {
       "id": "kuala-lumpur-malaysia",
@@ -753,6 +777,14 @@
       "lon": 14.514969
     },
     {
+      "id": "lobamba-eswatini",
+      "capital": "Lobamba",
+      "country": "eSwatini",
+      "sovereign": "eSwatini",
+      "lat": -26.466667,
+      "lon": 31.199997
+    },
+    {
       "id": "lome-togo",
       "capital": "Lomé",
       "country": "Togo",
@@ -809,14 +841,6 @@
       "lon": 171.38
     },
     {
-      "id": "ciudad-de-la-paz-equatorial-guinea",
-      "capital": "Ciudad de la Paz",
-      "country": "Equatorial Guinea",
-      "sovereign": "Equatorial Guinea",
-      "lat": 1.5925,
-      "lon": 10.823611
-    },
-    {
       "id": "male-maldives",
       "capital": "Malé",
       "country": "Maldives",
@@ -871,14 +895,6 @@
       "sovereign": "eSwatini",
       "lat": -26.316651,
       "lon": 31.133335
-    },
-    {
-      "id": "melekeok-palau",
-      "capital": "Melekeok",
-      "country": "Palau",
-      "sovereign": "Palau",
-      "lat": 7.487396,
-      "lon": 134.626549
     },
     {
       "id": "mexico-city-mexico",
@@ -993,6 +1009,14 @@
       "lon": 77.19998
     },
     {
+      "id": "ngerulmud-palau",
+      "capital": "Ngerulmud",
+      "country": "Palau",
+      "sovereign": "Palau",
+      "lat": 7.5006,
+      "lon": 134.6242
+    },
+    {
       "id": "niamey-niger",
       "capital": "Niamey",
       "country": "Niger",
@@ -1023,14 +1047,6 @@
       "sovereign": "Tonga",
       "lat": -21.138512,
       "lon": -175.220564
-    },
-    {
-      "id": "nur-sultan-kazakhstan",
-      "capital": "Astana",
-      "country": "Kazakhstan",
-      "sovereign": "Kazakhstan",
-      "lat": 51.181125,
-      "lon": 71.427774
     },
     {
       "id": "oslo-norway",
@@ -1143,6 +1159,14 @@
       "sovereign": "Trinidad and Tobago",
       "lat": 10.651997,
       "lon": -61.517031
+    },
+    {
+      "id": "porto-novo-benin",
+      "capital": "Porto-Novo",
+      "country": "Benin",
+      "sovereign": "Benin",
+      "lat": 6.483311,
+      "lon": 2.616626
     },
     {
       "id": "prague-czechia",
@@ -1351,6 +1375,14 @@
       "sovereign": "Bulgaria",
       "lat": 42.685295,
       "lon": 23.314708
+    },
+    {
+      "id": "sri-jayawardenepura-kotte-sri-lanka",
+      "capital": "Sri Jayawardenepura Kotte",
+      "country": "Sri Lanka",
+      "sovereign": "Sri Lanka",
+      "lat": 6.900004,
+      "lon": 79.949993
     },
     {
       "id": "stockholm-sweden",

@@ -66,13 +66,13 @@ test("all capital pairs preserve ordering, valid scores, and exact-match wins wi
       pairs += 1;
     }
   }
-  assert.equal(pairs, 39402);
+  assert.equal(pairs, 41006);
   assert.equal(JSON.stringify(capitals), originalData);
 });
 
 test("every existing Oceania target preserves its previous scores", () => {
   const targets = ["Canberra", "Suva", "Tarawa", "Majuro", "Palikir", "Wellington",
-    "Melekeok", "Port Moresby", "Apia", "Honiara", "Nuku'alofa", "Funafuti", "Port Vila"];
+    "Ngerulmud", "Port Moresby", "Apia", "Honiara", "Nuku'alofa", "Funafuti", "Port Vila"];
   for (const name of targets) {
     const target = capital(name);
     for (const guess of capitals) {

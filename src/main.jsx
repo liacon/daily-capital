@@ -1,8 +1,9 @@
+import { CATALOGUE_UPDATE, REVIEWED_CAPITALS, capitalRoleNote, showCatalogueUpdate } from "./catalogue-update.js";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { geoDistance, geoGraticule, geoNaturalEarth1, geoOrthographic, geoPath } from "d3-geo";
-import { capitalsForDate } from "./capital-catalog.js";
-import { dayNumber, targetForDate } from "./daily-puzzle.js";
+import { catalogVersionForDate } from "./capital-catalog.js";
+import { dayNumber, puzzleForSavedPlay } from "./daily-puzzle.js";
 import { EQUATORIAL_GUINEA_CORRECTION as capitalCorrection, showCapitalCorrection } from "./capital-corrections.js";
 import worldData from "./data/world.json";
 import { scoreGuess } from "./scoring.js";
@@ -19,7 +20,10 @@ const SITE_URL = "https://daily-capital.com";
 const CAPITAL_ALIASES = {
   "k-benhavn-denmark": ["København", "Kobenhavn"],
   "nur-sultan-kazakhstan": ["Nur-Sultan", "Nursultan"],
-  "ciudad-de-la-paz-equatorial-guinea": ["Oyala"]
+  "ciudad-de-la-paz-equatorial-guinea": ["Oyala"],
+  "sri-jayawardenepura-kotte-sri-lanka": ["Kotte", "Sri Jayewardenepura Kotte", "Sri Jayawardenapura Kotte", "Sri Jayewardenapura Kotte"],
+  "porto-novo-benin": ["Porto Novo"],
+  "naypyidaw-myanmar": ["Nay Pyi Taw"]
 };
 
 function targetFromUrl(capitals) {
@@ -634,8 +638,9 @@ function CapitalCorrectionNote({ onDismiss }) {
   );
 }
 
-function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, onShare, copied }) {
+function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, onShare, copied, catalogVersion }) {
   const exploreLinks = buildExploreLinks(target);
+  const roleNote = catalogVersion === CATALOGUE_UPDATE.version ? capitalRoleNote(target.id) : null;
   const stats = computePlayerStats(history);
   const closestBeforeSolve = guesses
     .filter((guess) => guess.score < 100)
@@ -686,6 +691,24 @@ function SolvePanel({ target, guesses, history, streak, demoTarget, revealed, on
         </button>
       )}
 
+      {roleNote && (
+        <aside className="capital-correction" aria-label="About this capital">
+          <div><h2>About this capital</h2><p>{roleNote.note}</p>
+            <a href={roleNote.source} target="_blank" rel="noreferrer">Source</a></div>
+        </aside>
+      )}
+      {catalogVersion === CATALOGUE_UPDATE.version && (
+        <details className="history-correction">
+          <summary>What changed in our capital list?</summary>
+          <div className="capital-correction"><div>
+            <p>From 27 November 2026, our corrected list includes the capitals below. These are corrections to our game data,
+              not announcements of new relocations. Earlier games keep their original answers and scores.</p>
+            <ul>{REVIEWED_CAPITALS.map(city => <li key={city.id}>
+              <a href={city.source} target="_blank" rel="noreferrer">{city.capital}, {city.country}</a> — {city.role}
+            </li>)}</ul>
+          </div></div>
+        </details>
+      )}
       <WeatherSummary city={target} />
 
       {target.id === capitalCorrection.previous.id && <CapitalCorrectionNote />}
@@ -768,14 +791,16 @@ function App() {
 
 function DailyGame({ today, onDateChange }) {
   const puzzleNumber = dayNumber(today);
-  const capitals = useMemo(() => capitalsForDate(today), [today]);
-  const demoTarget = useMemo(() => targetFromUrl(capitals), [capitals]);
-  const target = useMemo(() => demoTarget || targetForDate(today), [demoTarget, today]);
   const [store, setStore] = useState(loadStore);
+  const puzzle = useMemo(() => puzzleForSavedPlay(today, store.plays?.[today]), [today, store.plays?.[today]]);
+  const version = puzzle.version;
+  const capitals = version.guesses;
+  const demoTarget = useMemo(() => targetFromUrl(capitals), [capitals]);
+  const target = demoTarget || puzzle.target;
   const [input, setInput] = useState("");
-  const [guesses, setGuesses] = useState(() => initialGuessesForToday(store, today, target, demoTarget));
+  const [guesses, setGuesses] = useState(() => initialGuessesForToday(store, today, target, demoTarget, version));
   const [message, setMessage] = useState(() =>
-    initialGuessesForToday(store, today, target, demoTarget).some((guess) => guess.id === target.id) ||
+    initialGuessesForToday(store, today, target, demoTarget, version).some((guess) => guess.id === target.id) ||
     initialRevealForToday(store, today, target, demoTarget)
       ? "You've already completed today's puzzle. Come back tomorrow for a new capital."
       : ""
@@ -833,6 +858,7 @@ function DailyGame({ today, onDateChange }) {
     const nextPlay = {
       puzzleNumber,
       targetId: target.id,
+      catalogVersion: version.id,
       guesses: guesses.map((guess) => guess.id),
       revealed,
       won,
@@ -853,7 +879,7 @@ function DailyGame({ today, onDateChange }) {
       saveStore(next);
       return next;
     });
-  }, [demoTarget, guesses, puzzleNumber, revealed, solved, target.id, today, won]);
+  }, [demoTarget, guesses, puzzleNumber, revealed, solved, target.id, today, won, version.id]);
 
   useEffect(() => {
     if (!won || demoTarget) return;
@@ -924,11 +950,11 @@ function DailyGame({ today, onDateChange }) {
     });
   }
 
-  function dismissCapitalCorrection() {
+  function dismissCapitalCorrection(noticeId = capitalCorrection.id) {
     setStore((current) => {
       const next = {
         ...current,
-        dismissedNotices: { ...current.dismissedNotices, [capitalCorrection.id]: true }
+        dismissedNotices: { ...current.dismissedNotices, [noticeId]: true }
       };
       saveStore(next);
       return next;
@@ -952,7 +978,7 @@ function DailyGame({ today, onDateChange }) {
       return;
     }
 
-    const scored = { ...selected, ...scoreGuess(selected, target, capitals) };
+    const scored = { ...selected, ...scoreGuess(selected, target, version.scoring) };
     setGuesses((current) => [...current, scored]);
     setInput("");
     setMessage(scored.score === 100 ? "Solved. Nicely done." : `${proximityLabel(scored.score)}: ${scored.score}/100`);
@@ -1022,10 +1048,25 @@ function DailyGame({ today, onDateChange }) {
         </div>
       </header>
 
-      {!demoTarget && showCapitalCorrection(today, store.dismissedNotices?.[capitalCorrection.id]) &&
+      {!demoTarget && today < CATALOGUE_UPDATE.gameFrom && showCapitalCorrection(today, store.dismissedNotices?.[capitalCorrection.id]) &&
         (target.id !== capitalCorrection.current.id || solved) && (
-          <CapitalCorrectionNote onDismiss={dismissCapitalCorrection} />
+          <CapitalCorrectionNote onDismiss={() => dismissCapitalCorrection()} />
         )}
+
+      {!demoTarget && showCatalogueUpdate(today, store.dismissedNotices?.[CATALOGUE_UPDATE.id]) && (
+        <aside className="capital-correction" aria-label="Capital list update">
+          <div>
+            <h2>Our capital list has been updated</h2>
+            <p>We’ve corrected several entries and added missing capitals. Your previous results and streak are preserved.
+              Explanations appear after you finish the puzzle.</p>
+          </div>
+          <button type="button" onClick={() => dismissCapitalCorrection(CATALOGUE_UPDATE.id)} aria-label="Dismiss capital list update">Got it</button>
+        </aside>
+      )}
+      {!demoTarget && version.id !== catalogVersionForDate(today).id && (
+        <p className="capital-correction">You started this puzzle before our update. Your guesses and scores are preserved;
+          the corrected list applies to your next puzzle.</p>
+      )}
 
       <section className="game-layout">
         <MapView guesses={mapGuesses} solved={solved} />
@@ -1145,6 +1186,7 @@ function DailyGame({ today, onDateChange }) {
           {solved && (
             <div ref={solvePanelRef}>
               <SolvePanel
+                catalogVersion={version.id}
                 copied={copied}
                 demoTarget={demoTarget}
                 guesses={guesses}

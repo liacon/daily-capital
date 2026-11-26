@@ -1,6 +1,6 @@
 # Daily Capital — Project Status
 
-Last updated: 2026-11-25
+Last updated: 2026-11-26
 
 ## Purpose and maintenance
 
@@ -13,9 +13,29 @@ Keep this document current when development changes functionality, decisions, ou
 - Repository: https://github.com/liacon/daily-capital.git
 - Application directory: `C:\Users\lcaug\OneDrive\Documents\Codex\2026-09-25\referenced-chatgpt-conversation-this-is-an\work\LoughlaneDigital` (located here on 2026-11-24; the previous non-OneDrive directory is no longer present).
 - Current branch: `main`
-- Latest local application commit: `61a1caf` — Default to globe view and reorder result links. Independent production verification remains pending for this and the subsequent-to-rollover releases recorded below. Earlier rollover commit `5313e75` was verified live on 2026-10-15.
-- Current uncommitted work: Equatorial Guinea capital correction, date-specific catalogue/schedule/scoring/restoration, correction notices, generation/validation changes, regression tests and documentation. Working tree was clean before these changes. No commit, push or deployment performed.
+- Latest local application commit: `59108cb` — Correct Equatorial Guinea capital and explain change to players. Local commit verified on 2026-11-26; production verification remains pending.
+- Current uncommitted work: approved seven-capital correction, explicit v1/v2/v3 catalogues, frozen legacy data, version-aware saves/scoring/scheduling, player explanations, regression tests and audit/status documentation. The earlier uncommitted audit files were preserved. No commit, push or deployment performed.
 - The nested, ignored `Daily Capital/` directory is a separate repository with only a README and Git attributes. The application lives in the parent directory listed above.
+
+## Capital catalogue audit — 2026-11-26
+
+- User requested a full audit after Dodoma was rejected while Dar es Salaam was accepted. Completed a 199-record name/coverage screen, review of all 16 excluded national/alternate-capital source records, and targeted authoritative-source checks. Full findings and limitations: [CAPITAL_DATA_AUDIT.md](CAPITAL_DATA_AUDIT.md); per-record evidence: [CAPITAL_DATA_AUDIT.json](CAPITAL_DATA_AUDIT.json).
+- Priority findings: Dodoma/Tanzania, Gitega/Burundi, missing Porto-Novo/Benin, missing Sri Jayawardenepura Kotte/Sri Lanka, missing Juba/South Sudan, Palau's Ngerulmud naming/location review, and missing Lobamba/Eswatini. No factual corrections were implemented in this audit.
+- Policy decisions remain: eligibility of government/legislative/economic seats; Yaren for Naoero (formerly Nauru, no official capital); Palestine and other territorial coverage. Retain all three South African capitals. Do not blanket-import alternate or historical source records.
+- Root cause: cartographic source flags exclude valid capitals; minimum-count validation does not detect missing countries or outdated designations. Adding cities directly would alter catalogue-length-dependent daily shuffles and neighbourhood-based scores. Next implementation must preserve historical city IDs, played puzzles, scoring and streaks using explicit versions.
+- Equatorial Guinea correction is now committed locally at 59108cb. The older UN baseline still lists Malabo; it must not override the newer government-sourced correction. Production revision was not checked during this audit.
+- Evidence limits: all playable entries have references, but routine matches are baseline screening rather than separate constitutional/coordinate verification. No app tests/build were needed for documentation-only changes. Audit integrity and Git whitespace checks recorded after writing.
+
+## Catalogue v3 implementation — 2026-11-26
+
+- User approved the seven audit corrections and explicit catalogue versions. Current data now contains 203 cities / 196 country labels: Dodoma, Gitega and Ngerulmud replace the three outdated/imprecise current records; Porto-Novo, Kotte, Juba and Lobamba are added. Existing Colombo, Cotonou, Mbabane and South African/Bolivian/Ivory Coast seats are retained. No disputed-territory or other seat expansion was bundled in.
+- Sources, coordinates, roles and explanations are curated in src/catalogue-update.js. Ngerulmud uses the UNEP capital-location point 7.5006, 134.6242; the other six points come from their named bundled Natural Earth records. Generation reapplies all seven corrections; validation checks the published catalogue hash and the required records.
+- Explicit v1/v2/v3 definitions provide separate guess, answer and scoring references. A frozen snapshot of commit 59108cb supplies v2 and the historical v1 variant. V3 begins a new 203-city cycle on 2026-11-27 00:00 UTC; puzzle numbering stays continuous. Earlier targets/scores/IDs/coordinates are unchanged. Future data releases must create another version, not edit a published deck.
+- Saves now include catalogVersion. Existing unversioned saves are matched to their legacy target schedule and retain that catalogue through completion/reload. A stale-build player may finish the old-deck answer on a transition day; the next new game uses v3. No storage reset or history rewrite.
+- Added Kotte spelling variants, Porto Novo and Nay Pyi Taw search aliases. Former cities are distinct history records, not aliases for their replacements.
+- A generic update notice runs 27 November–10 December and supersedes the old top banner from the new cutover. It names no answers. Seven sourced corrections are expandable after completion; affected city results explain their roles. Equatorial Guinea's historical explanations remain.
+- Automated verification: 28 tests passed, including all 1,061 released targets, original 3,000-slot legacy schedule, both historical 199×199 score matrices, all 41,006 current non-exact pairs, three v3 cycles, historical and old-build saves, regeneration and notices. Data validation and production build passed. Existing bundle-size warning remains; built JS about 590 kB / 195 kB gzip. Production-build Chrome checks also passed at 320/390/1280px: UTC cutover, all seven new autocomplete entries/exact solves/map markers/weather coordinates, aliases, former-name rejection, notice/dismissal, sourced result notes, spoiler-free share/reload, no duplicate solve analytics, preview storage isolation and old-build save completion/reload/next-day upgrade. No page errors or horizontal overflow. Screenshots and the isolated browser harness are in C:/Users/lcaug/Documents/Codex/capital-release-2026-11-26/. Weather was mocked and analytics intercepted; no live player data was changed. Git whitespace checks passed.
+- No dependencies installed and no commit, push or deployment performed. Audit report/ledger remain a dated pre-correction snapshot rather than being rewritten to look like a current-data audit.
 
 ## Current implementation
 
@@ -266,7 +286,7 @@ Historical implementation-stage record. The user subsequently committed/pushed t
 
 ## Next steps
 
-1. User to review the correction notice, then commit/push the Equatorial Guinea correction on/after 26 November after UTC midnight as agreed. Verify the deployed revision, new-city search and notice. No deployment automation or reminder was created; old browser tabs need the updated build. Earlier releases also await independent production verification in this task.
+1. Review and publish the prepared catalogue-v3 release. The date cutover is 27 November 2026 at 00:00 UTC; prior dates and older-build saved games retain their catalogue. Verify the deployed revision and corrected autocomplete after publishing. Wider scope/seat decisions remain separate; no deployment was performed in this task.
 2. Consider the proposed post-game explanation of multiple capitals as a separate product change. The dataset already includes all three South African capitals.
 3. Reassess storage if low-space symptoms return; 6.06 GB was available after the user's cleanup/restart. No assistant cleanup was performed.
 4. Keep this document current with decisions, checks, outstanding tasks, and release commit IDs. Commit or deploy only when authorized.
